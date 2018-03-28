@@ -8,7 +8,7 @@ legendGrad(x, y = NULL, inset = 0, width = 0.07, height = 0.1,
   labels = NULL, labAdj = 0.75, col = c("white", "black"),
   border = "black", title = "", titleAdj = c(0.5, 0.9),
   gradAdjX = c(0.2, 0.5), gradAdjY = c(0.1, 0.8), boxBg = par("bg"),
-  boxBorder = "black", ...)
+  boxBorder = "black", swatches = NULL, ...)
 }
 \arguments{
 \item{x}{Numeric or character. Describes the location of the legend. This is a numeric value (in which case \code{y} must also be supplied) indicating the x-coordinate of the top left of the box surrounding the legend. Alternatively, it is a character describing the position of the box surrounding the legend relative to the existing plot (\code{'topleft'}, \code{'topright'}, \code{'bottomleft'}, \code{'bottomright'}, \code{'top'}, \code{'bottom'}, \code{'left'}, or \code{'right'}).}
@@ -25,7 +25,7 @@ legendGrad(x, y = NULL, inset = 0, width = 0.07, height = 0.1,
 
 \item{labAdj}{Numeric between 0 and 1. Position of labels relative to the containing box.}
 
-\item{col}{Character list. Names of colors to be used to create a gradient to fill the legend bar. The first color will be the lowest value and the last the highest value.}
+\item{col}{List of characters or integers. Names of colors to be used to create a gradient to fill the legend bar. The first color will be the lowest value and the last the highest value.}
 
 \item{border}{Character or integer. Name (or integer code) of color to use to draw border of the gradient bar.}
 
@@ -41,6 +41,14 @@ legendGrad(x, y = NULL, inset = 0, width = 0.07, height = 0.1,
 
 \item{boxBorder}{Character or integer. Name (or integer code) of color to use to use for box border containing legend. Leave as \code{NULL} to not draw a box border.}
 
+\item{swatches}{A list or lists, each of which contains information on extra "swatches" of a single color to add above/below/on the gradient bar. These are useful, for example, for describing data that does not fall into the range covered by the data (e.g., \code{NA}'s).  If \code{swatches} is \code{NULL} then it is ignored.  Otherwise, it is a list of lists, and each sublist defines a different swatch. Sublists have these elements:
+\itemize{
+    \item \code{swatchAdjY} Two numeric values between 0 and 1. Size of the swatches the x-dimension as a proportion of the container box size. The first pertains to the left side of the bar and the second the right side.  (Swatches will always be left-right aligned with the gradient bar.)
+    \item \code{col} Character or integer representing the swatch's color.
+    \item \code{border} Character or integer. Name (or integer code) of color to use to draw border of the swatch.
+    \item \code{labels} Character, for labelling the swatch.
+}}
+
 \item{...}{Arguments to pass to \code{\link[graphics]{plot}}, \code{\link[graphics]{polygon}}, or \code{\link[graphics]{text}}.}
 }
 \value{
@@ -50,25 +58,25 @@ Nothing (side effect is to add a legend to an existing graphics device).
 This function adds a legend to an existing plot that shows a gradient in color. It first draws a "containing" box then a bar with a color gradient inside the box. A legend title and labels for levels indicated by the color bar can be added.
 }
 \examples{
-set.seed(123)
 wealth <- data.frame(
 	country = c('USA', 'Japan', 'Malaysia', 'Germany', 'England',
-'South Korea', 'DR Congo', 'Nigeria'),
+'North Korea', 'South Korea', 'Nigeria'),
 	pop = c(325365189, 126672000, 31718000, 82175700,
- 54786300, 51446201, 78736153, 185989640),
-	gdp = c(18558, 5420, 913.593, 4150, 1870, 2029, 70.294, 1166),
-	perCapGdp = c(145894, 57220, 28490, 50206, 34205, 39446, 811, 6351),
-	hivPerc = c(0.03, 0.01, 0.40, 0.15, 0.16, 0.29, 0.70, 2.90)
+54786300, 25370000, 51446201, 185989640),
+	gdp = c(18558, 5420, 913.593, 4150, 1870, 12.38, 2029, 1166),
+	perCapGdp = c(145894, 57220, 28490, 50206, 34205, 583, 39446, 6351),
+	hivPerc = c(0.03, 0.01, 0.40, 0.15, 0.16, NA, 0.29, 0.29)
 )
 
 # color ramp
 colFx <- grDevices::colorRampPalette(c('white', 'red'))
 cols <- colFx(100)
-hivPerc <- round(100 * wealth$hivPerc / max(wealth$hivPerc))
+hivPerc <- round(100 * wealth$hivPerc / max(wealth$hivPerc, na.rm=TRUE))
 cols <- cols[hivPerc]
+cols[is.na(cols)] <- 'gray'
 
 # rescale population (symbols size)
-popRescaled <- 0.1 + 3 * (log10(wealth$pop) - min(log10(wealth$pop)))
+popRescaled <- 1 + 3 * (log10(wealth$pop) - min(log10(wealth$pop)))
 plot(wealth$gdp, wealth$perCapGdp, pch=21,
 cex=popRescaled, bg=cols, xlab='GDP (Billion $)', ylab='GDP Per Capita ($)')
 text(wealth$gdp, wealth$perCapGdp, labels=as.character(wealth$country),
@@ -78,18 +86,26 @@ legendGrad(
 	x='bottomright',
 	y = NULL,
 	inset = 0.02,
-	width = 0.2,
+	width = 0.23,
 	height = 0.3,
-	labels = range(wealth$hivPerc),
-	labAdj = 0.7,
+	labels = 100 * pretty(wealth$hivPerc),
+	labAdj = 0.6,
 	col = c('white', 'red'),
 	border = 'black',
 	title = 'HIV (\%)',
 	titleAdj = c(0.5, 0.9),
 	gradAdjX = c(0.2, 0.5),
-	gradAdjY = c(0.1, 0.8),
-	boxBg = 'gray90',
-	boxBorder = 'black'
+	gradAdjY = c(0.2, 0.8),
+	boxBorder = 'black',
+	swatches=list(
+		list(
+			swatchAdjY=c(0.85, 0.95),
+			col='gray',
+			border='black',
+			labels='NA'
+		)
+	)
+
 )
 }
 \seealso{
