@@ -68,7 +68,7 @@ legendQuad <- function(
 
 		xInset <- inset[1] * plotWidth
 		yInset <- inset[2] * plotHeight
-
+		
 		if (x == 'topleft') {
 			x <- pos[1] + xInset
 			y <- pos[4] - yInset
@@ -82,17 +82,17 @@ legendQuad <- function(
 			x <- pos[2] - legWidth - xInset
 			y <- pos[3] + legHeight + yInset
 		} else if (x == 'bottom') {
-			x <- 0.5 * plotWidth
-			y <- pos[4] + 0.1 * plotHeight
+			x <- pos[1] + 0.5 * plotWidth - 0.5 * legWidth
+			y <- pos[3] + legHeight + yInset
 		} else if (x == 'top') {
-			x <- 0.5 * plotWidth
-			y <- pos[3] - 0.1 * plotHeight
+			x <- pos[1] + 0.5 * plotWidth - 0.5 * legWidth
+			y <- pos[4] - legHeight - yInset
 		} else if (x == 'left') {
-			x <- pos[1] + 0.1 * plotWidth
-			y <- 0.5 * plotHeight
+			x <- pos[1] + xInset
+			y <- pos[3] + 0.5 * plotHeight + 0.5 * legHeight
 		} else if (x == 'right') {
-			x <- pos[2] - 0.1 * plotWidth
-			y <- 0.5 * plotHeight
+			x <- pos[2] - legWidth - xInset
+			y <- pos[3] + 0.5 * plotHeight + 0.5 * legHeight
 		} else {
 			error('The "x" coordinate must be a numeric value or an accepted position word (e.g., "top", "topleft", "bottomright", etc.).')
 		}
@@ -173,7 +173,7 @@ legendQuad <- function(
 		ySides <- pmin(swatchTop, ySides)
 		ySides <- pmax(swatchBottom, ySides)
 
-		polygon(xSides, ySides, col=hsv(pixels[i, 'h'], pixels[i, 's'], pixels[i, 'v']), border=NA)
+		polygon(xSides, ySides, col=hsv(pixels[i, 'h'], pixels[i, 's'], pixels[i, 'v']), border=NA, xpd=NA)
 
 	}
 

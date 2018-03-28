@@ -41,7 +41,7 @@ pies <- function(
 		plotBox <- par('usr')
 		ratio <- (plotBox[4] - plotBox[3]) / (plotBox[2] - plotBox[1])
 
-		for (i in 1:length(x)) {
+		for (i in seq_along(x)) {
 
 			theta <- seq((-deg[i] + 90) * pi / 180, (-deg[i + 1] + 90) * pi / 180, length.out=999)
 			xs <- xPos + radius * cos(theta)

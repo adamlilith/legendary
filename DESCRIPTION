@@ -1,7 +1,7 @@
 Package: legendary
 Title: New types of plots and their legends 
-Version: 0.0.0.1
-Date: 2018-03-15
+Version: 0.0.0.2
+Date: 2018-03-28
 Author: Adam B. Smith <adam@earthSkySea.org>
 Maintainer: Adam B. Smith <adam.smith@mobot.org>
 Description: This package is a collage of functions to create plots
