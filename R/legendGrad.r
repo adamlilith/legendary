@@ -132,12 +132,12 @@ legendGrad <- function(
 			y <- pos[3] + legHeight + yInset
 		} else if (x == 'top') {
 			x <- pos[1] + 0.5 * plotWidth - 0.5 * legWidth
-			y <- pos[3] - legHeight - yInset
+			y <- pos[4] - yInset
 		} else if (x == 'left') {
 			x <- pos[1] + xInset
 			y <- pos[3] + 0.5 * plotHeight + 0.5 * legHeight
 		} else if (x == 'right') {
-			x <- pos[2] - legWidth - xInset
+			x <- pos[2] - xInset - legWidth
 			y <- pos[3] + 0.5 * plotHeight + 0.5 * legHeight
 		} else {
 			error('The "x" coordinate must be a numeric value or an accepted position word (e.g., "top", "topleft", "bottomright", etc.).')
@@ -146,10 +146,10 @@ legendGrad <- function(
 	}
 
 	# draw containing box
-	if (!is.null(boxBorder)) graphics::polygon(c(x, x + width * plotWidth, x + width * plotWidth, x), c(y, y, y - height * plotHeight, y - height * plotHeight), col=boxBg, border=boxBorder, ...)
+	if (!is.null(boxBorder)) graphics::polygon(c(x, x + width * plotWidth, x + width * plotWidth, x), c(y, y, y - height * plotHeight, y - height * plotHeight), col=boxBg, border=boxBorder, xpd=NA, ...)
 
 	# legend title
-	graphics::text(x + titleAdj[1] * legWidth, y - (1 - titleAdj[2]) * legHeight, labels=title, ...)
+	graphics::text(x + titleAdj[1] * legWidth, y - (1 - titleAdj[2]) * legHeight, labels=title, xpd=NA, ...)
 
 	# color gradient
 	colFx <- grDevices::colorRampPalette(col)
@@ -166,14 +166,14 @@ legendGrad <- function(
 	# plot (use many small rectangles)
 	yInc <- seq(bottom, top, length.out=100)
 
-	for (i in 1:99) graphics::polygon(c(left, right, right, left), c(yInc[i], yInc[i], yInc[i + 1], yInc[i + 1]), col=cols[i], border=NA, ...)
-	if (!is.na(border)) graphics::polygon(c(left, right, right, left), c(bottom, bottom, top, top), col=NA, border=border, ...)
+	for (i in 1:99) graphics::polygon(c(left, right, right, left), c(yInc[i], yInc[i], yInc[i + 1], yInc[i + 1]), col=cols[i], border=NA, xpd=NA, ...)
+	if (!is.na(border)) graphics::polygon(c(left, right, right, left), c(bottom, bottom, top, top), col=NA, border=border, xpd=NA, ...)
 
 	# add labels
 	if (!is.null(labels)) {
 
 		labY <- seq(bottom, top, length.out=length(labels))
-		text(x + legWidth * rep(labAdj, length(labels)), labY, labels=labels, pos=4, ...)
+		text(x + legWidth * rep(labAdj, length(labels)), labY, labels=labels, pos=4, xpd=NA, ...)
 
 	}
 
@@ -185,10 +185,10 @@ legendGrad <- function(
 			top <- y - swatches[[i]]$swatchAdjY[1] * legHeight
 			bottom <- y - swatches[[i]]$swatchAdjY[2] * legHeight
 
-			graphics::polygon(c(left, right, right, left), c(bottom, bottom, top, top), col=swatches[[i]]$col, border=swatches[[i]]$border, ...)
-			labY <- top <- y - (mean(c(swatches[[i]]$swatchAdjY[[1]], swatches[[i]]$swatchAdjY[[2]]))) * legHeight
+			graphics::polygon(c(left, right, right, left), c(bottom, bottom, top, top), col=swatches[[i]]$col, border=swatches[[i]]$border, xpd=NA, ...)
+			labY <- top <- y - mean(swatches[[i]]$swatchAdjY) * legHeight
 
-			text(x + legWidth * labAdj, labY, labels=swatches[[i]]$labels, pos=4, ...)
+			text(x + legWidth * labAdj, labY, labels=swatches[[i]]$labels, pos=4, xpd=NA, ...)
 
 		}
 
