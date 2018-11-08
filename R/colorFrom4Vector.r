@@ -4,7 +4,7 @@
 #' @param x Numeric vector with four elements. The values should be proportions or represent proportions (i.e., they will be standardized so they sum to 1).
 #' @param cols Four-element vector of characters or integers. Names (or integer codes) of four colors used to convert the value \code{x} to HSV color format. The first color corresponds to the condition where the first value of \code{x} is >0 and the remainder = 0. The second represents the condition where the second value of \code{x} is >0 and the others = 0, and so on.
 #' @return A list with two named elements: \code{col}, an HSV color code translation for the values of \code{x} and \code{xy}, a two-element numeric vector with the coordinates of \code{x} if plotted such that \code{col[1]} is at coordinate \code{(0, 0)}, \code{col[2]} at \code{(0, 1)}, \code{col[3]} at \code{(1, 1)}, and \code{col[4]} at \code{(1, 0)}.
-#' @seealso \code{\link[graphics]{hsv}}, \code{\link[IDPmisc]{col2hsv}}
+#' @seealso \code{\link[grDevices]{hsv}}, \code{\link[IDPmisc]{col2hsv}}
 #' @examples
 #' plot(0, xlim=c(0, 1), ylim=c(0, 1), xlab='<--- Population A     Population D --->', ylab='<--- Population A     Population B --->')
 #' for (i in 1:100) {

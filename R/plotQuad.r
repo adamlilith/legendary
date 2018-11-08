@@ -14,7 +14,7 @@
 #' @param ... Arguments to pass to \code{\link[graphics]{points}}, \code{\link[graphics]{plot}}, \code{\link[graphics]{polygon}}, or \code{\link[graphics]{text}}.
 #' @return Nothing (side effect is to create a plot).
 #' @details Note that there is not a unique (1-to-1) mapping of the 4 values to position on the plot. For example, if belonging solely to population A is represented by placing a point in the lower left corner, population B in the upper left, C the upper right, and D the lower right, then belonging strongly to population A and weakly to C will place a point near the location close to the location where a point belonging strongly to A and weakly to B and D will also lie.
-#' @seealso \code{\link[omniPlots]{colorFrom4Vector}}, \code{\link[graphics]{legendQuad}} 
+#' @seealso \code{\link[legendary]{colorFrom4Vector}}, \code{\link[legendary]{legendQuad}} 
 #' @examples
 #' data(religion)
 #' head(religion)

@@ -20,7 +20,7 @@
 #' @param boxBorder Character or integer. Name (or integer code) of color to use to use for box border containing legend. Leave as \code{NULL} to not draw a box border.
 #' @param ... Arguments to pass to \code{\link[graphics]{plot}}, \code{\link[graphics]{polygon}}, or \code{\link[graphics]{text}}.
 #' @return Nothing (side effect is to add a legend to an existing graphics device).
-#' @seealso \code{\link[graphics]{legend}}, \code{\link[graphics]{gradLegend}},
+#' @seealso \code{\link[graphics]{legend}}, \code{\link[legendary]{legendGrad}},
 #' @examples
 #' data(religion)
 #' head(religion)
@@ -86,12 +86,12 @@ legendQuad <- function(
 			y <- pos[3] + legHeight + yInset
 		} else if (x == 'top') {
 			x <- pos[1] + 0.5 * plotWidth - 0.5 * legWidth
-			y <- pos[4] - legHeight - yInset
+			y <- pos[4] - yInset
 		} else if (x == 'left') {
 			x <- pos[1] + xInset
 			y <- pos[3] + 0.5 * plotHeight + 0.5 * legHeight
 		} else if (x == 'right') {
-			x <- pos[2] - legWidth - xInset
+			x <- pos[2] - xInset - legWidth
 			y <- pos[3] + 0.5 * plotHeight + 0.5 * legHeight
 		} else {
 			error('The "x" coordinate must be a numeric value or an accepted position word (e.g., "top", "topleft", "bottomright", etc.).')

@@ -5,9 +5,9 @@
 \title{Creates a "four-color" plot for interpreting data with mixtures of four aspects.}
 \usage{
 plotQuad(x, cols = c("white", "cyan", "black", "red"), main = "",
-  labels = colnames(x), labelCex = 0.6, labelAdj = 1, background = TRUE,
-  n = 25, style = "pies", pch = 21, radius = 0.01, border = "black",
-  na.rm = FALSE, ...)
+  labels = colnames(x), labelCex = 0.6, labelAdj = 1,
+  background = TRUE, n = 25, style = "pies", pch = 21,
+  radius = 0.01, border = "black", na.rm = FALSE, ...)
 }
 \arguments{
 \item{x}{Data frame or matrix with 4 columns, each representing the relative probabilities of belonging to one of 4 aspects. Each row will be represented by a point on the plot.}
@@ -51,5 +51,5 @@ plotQuad(religion[ , religs], main='Religion by Country', radius=0.04)
 plotQuad(religion[ , religs], 'points', background=FALSE, main='Religion by Country', cex=2)
 }
 \seealso{
-\code{\link[omniPlots]{colorFrom4Vector}}, \code{\link[graphics]{legendQuad}}
+\code{\link[legendary]{colorFrom4Vector}}, \code{\link[legendary]{legendQuad}}
 }

@@ -1,20 +1,21 @@
 Package: legendary
 Title: New types of plots and their legends 
-Version: 0.0.0.2
-Date: 2018-03-28
-Author: Adam B. Smith <adam@earthSkySea.org>
+Version: 0.0.0.3
+Date: 2018-11-08
+Author: Adam B. Smith <adam.smith@mobot.org>
 Maintainer: Adam B. Smith <adam.smith@mobot.org>
 Description: This package is a collage of functions to create plots
 	and their legends, including "quad" plots (in which responses
 	are one of four values), legends with gradients, and "spoke"
-	plots which help visualize networks and correlations bewteen
+	plots which help visualize networks and correlations between
 	variables.
 Depends:
-	omnibus
+    graphics
 Imports:
+	omnibus
 Suggests:
 	IDPmisc
 License: GPL-3
 LazyData: true
 URL: http://www.earthSkySea.org
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.0
