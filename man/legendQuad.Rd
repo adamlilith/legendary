@@ -64,5 +64,5 @@ plotQuad(religion[ , religs], 'points', background=FALSE, main='Religion by Coun
 legendQuad('top', inset=0.01, labels=colnames(relig))
 }
 \seealso{
-\code{\link[graphics]{legend}}, \code{\link[graphics]{gradLegend}},
+\code{\link[graphics]{legend}}, \code{\link[legendary]{legendGrad}},
 }

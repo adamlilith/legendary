@@ -51,5 +51,5 @@ plotQuad(religion[ , religs], main='Religion by Country', radius=0.04)
 plotQuad(religion[ , religs], 'points', background=FALSE, main='Religion by Country', cex=2)
 }
 \seealso{
-\code{\link[omniPlots]{colorFrom4Vector}}, \code{\link[graphics]{legendQuad}}
+\code{\link[legendary]{colorFrom4Vector}}, \code{\link[legendary]{legendQuad}}
 }

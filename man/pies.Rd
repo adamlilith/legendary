@@ -10,7 +10,7 @@ pies(x, add = FALSE, xPos = 0, yPos = 0, radius = 0.8,
 \arguments{
 \item{x}{a Numeric vector of non-negative numerical quantities. These values are displayed as the areas of pie slices.}
 
-\item{add}{Logical, if \code{TRUE} then add the pie to an existing plot. If \code{FALSE} then the arguments are passed to \code{\link[graphics]{pi}}. In this case then all arguments default to their interpretation in that function.}
+\item{add}{Logical, if \code{TRUE} then add the pie to an existing plot. If \code{FALSE} then the arguments are passed to \code{\link[graphics]{pie}}. In this case then all arguments default to their interpretation in that function.}
 
 \item{xPos}{Numeric, the x-coordinate of the center of the pie (ignored if \code{add} is \code{FALSE}).}
 

@@ -140,7 +140,7 @@ legendGrad <- function(
 			x <- pos[2] - xInset - legWidth
 			y <- pos[3] + 0.5 * plotHeight + 0.5 * legHeight
 		} else {
-			error('The "x" coordinate must be a numeric value or an accepted position word (e.g., "top", "topleft", "bottomright", etc.).')
+			error('The "x" coordinate in function "legendGrad" must be a numeric value or\nan accepted position word (e.g., "top", "topleft", "bottomright", etc.).')
 		}
 
 	}
@@ -158,13 +158,13 @@ legendGrad <- function(
 	# get gradient bounding box
 	left <- x + gradAdjX[1] * legWidth
 	right <- x + gradAdjX[2] * legWidth
-	top <- y - gradAdjY[1] * legHeight
-	bottom <- y - gradAdjY[2] * legHeight
+	bottom <- y - (1 - gradAdjY[2]) * legHeight
+	top <- y - (1 - gradAdjY[1]) * legHeight
 
 	gradHeight <- top - bottom
 
 	# plot (use many small rectangles)
-	yInc <- seq(bottom, top, length.out=100)
+	yInc <- seq(top, bottom, length.out=100)
 
 	for (i in 1:99) graphics::polygon(c(left, right, right, left), c(yInc[i], yInc[i], yInc[i + 1], yInc[i + 1]), col=cols[i], border=NA, xpd=NA, ...)
 	if (!is.na(border)) graphics::polygon(c(left, right, right, left), c(bottom, bottom, top, top), col=NA, border=border, xpd=NA, ...)
@@ -172,7 +172,7 @@ legendGrad <- function(
 	# add labels
 	if (!is.null(labels)) {
 
-		labY <- seq(bottom, top, length.out=length(labels))
+		labY <- seq(top, bottom, length.out=length(labels))
 		text(x + legWidth * rep(labAdj, length(labels)), labY, labels=labels, pos=4, xpd=NA, ...)
 
 	}

@@ -2,7 +2,7 @@
 #'
 #' This function plots a pie graph. Unlike \code{\link[graphics]{pie}}, it can be used to add a pie graph to an existing plot.
 #' @param x a Numeric vector of non-negative numerical quantities. These values are displayed as the areas of pie slices.
-#' @param add Logical, if \code{TRUE} then add the pie to an existing plot. If \code{FALSE} then the arguments are passed to \code{\link[graphics]{pi}}. In this case then all arguments default to their interpretation in that function.
+#' @param add Logical, if \code{TRUE} then add the pie to an existing plot. If \code{FALSE} then the arguments are passed to \code{\link[graphics]{pie}}. In this case then all arguments default to their interpretation in that function.
 #' @param xPos Numeric, the x-coordinate of the center of the pie (ignored if \code{add} is \code{FALSE}).
 #' @param yPos Numeric, the y-coordinate of the center of the pie (ignored if \code{add} is \code{FALSE}).
 #' @param radius Numeric, radius of pie in plot units.
