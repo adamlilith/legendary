@@ -26,5 +26,5 @@ for (i in 1:100) {
 }
 }
 \seealso{
-\code{\link[graphics]{hsv}}, \code{\link[IDPmisc]{col2hsv}}
+\code{\link[grDevices]{hsv}}, \code{\link[IDPmisc]{col2hsv}} in the \pkg{IDPmisc} package
 }
