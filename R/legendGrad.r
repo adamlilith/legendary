@@ -25,7 +25,7 @@
 #' }
 #' @param ... Arguments to pass to \code{\link[graphics]{plot}}, \code{\link[graphics]{polygon}}, or \code{\link[graphics]{text}}.
 #' @return Nothing (side effect is to add a legend to an existing graphics device).
-#' @seealso \code{\link[graphics]{legend}}
+#' @seealso \code{\link[graphics]{legend}}, \code{\link[legendary]{legendQuad}}
 #' @examples
 #' wealth <- data.frame(
 #' 	country = c('USA', 'Japan', 'Malaysia', 'Germany', 'England',
@@ -82,11 +82,11 @@ legendGrad <- function(
 	x,
 	y = NULL,
 	inset = 0,
-	width = 0.07,
-	height = 0.1,
+	width = 0.2,
+	height = 0.5,
 	labels = NULL,
 	labAdj = 0.75,
-	col = c('white', 'black'),
+	col = c('yellow', 'orange', 'red'),
 	border = 'black',
 	title = '',
 	titleAdj = c(0.5, 0.9),
@@ -158,13 +158,13 @@ legendGrad <- function(
 	# get gradient bounding box
 	left <- x + gradAdjX[1] * legWidth
 	right <- x + gradAdjX[2] * legWidth
-	top <- y - gradAdjY[1] * legHeight
-	bottom <- y - gradAdjY[2] * legHeight
+	top <- y - (1 - gradAdjY[1]) * legHeight
+	bottom <- y - (1 - gradAdjY[2]) * legHeight
 
 	gradHeight <- top - bottom
 
 	# plot (use many small rectangles)
-	yInc <- seq(bottom, top, length.out=100)
+	yInc <- seq(top, bottom, length.out=100)
 
 	for (i in 1:99) graphics::polygon(c(left, right, right, left), c(yInc[i], yInc[i], yInc[i + 1], yInc[i + 1]), col=cols[i], border=NA, ...)
 	if (!is.na(border)) graphics::polygon(c(left, right, right, left), c(bottom, bottom, top, top), col=NA, border=border, ...)
@@ -172,7 +172,7 @@ legendGrad <- function(
 	# add labels
 	if (!is.null(labels)) {
 
-		labY <- seq(bottom, top, length.out=length(labels))
+		labY <- seq(top, bottom, length.out=length(labels))
 		text(x + legWidth * rep(labAdj, length(labels)), labY, labels=labels, pos=4, ...)
 
 	}
@@ -182,11 +182,11 @@ legendGrad <- function(
 
 		for (i in seq_along(swatches)) {
 
-			top <- y - swatches[[i]]$swatchAdjY[1] * legHeight
-			bottom <- y - swatches[[i]]$swatchAdjY[2] * legHeight
+			top <- y - (1 - swatches[[i]]$swatchAdjY[1]) * legHeight
+			bottom <- y - (1 - swatches[[i]]$swatchAdjY[2]) * legHeight
 
 			graphics::polygon(c(left, right, right, left), c(bottom, bottom, top, top), col=swatches[[i]]$col, border=swatches[[i]]$border, ...)
-			labY <- top <- y - (mean(c(swatches[[i]]$swatchAdjY[[1]], swatches[[i]]$swatchAdjY[[2]]))) * legHeight
+			labY <- top <- y - (1 - (mean(c(swatches[[i]]$swatchAdjY[[1]], swatches[[i]]$swatchAdjY[[2]])))) * legHeight
 
 			text(x + legWidth * labAdj, labY, labels=swatches[[i]]$labels, pos=4, ...)
 
