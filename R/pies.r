@@ -2,7 +2,7 @@
 #'
 #' This function plots a pie graph. Unlike \code{\link[graphics]{pie}}, it can be used to add a pie graph to an existing plot.
 #' @param x a Numeric vector of non-negative numerical quantities. These values are displayed as the areas of pie slices.
-#' @param add Logical, if \code{TRUE} then add the pie to an existing plot. If \code{FALSE} then the arguments are passed to \code{\link[graphics]{pi}}. In this case then all arguments default to their interpretation in that function.
+#' @param add Logical, if \code{TRUE} then add the pie to an existing plot. If \code{FALSE} then the arguments are passed to \code{\link[graphics]{pie}}. In this case then all arguments default to their interpretation in that function.
 #' @param xPos Numeric, the x-coordinate of the center of the pie (ignored if \code{add} is \code{FALSE}).
 #' @param yPos Numeric, the y-coordinate of the center of the pie (ignored if \code{add} is \code{FALSE}).
 #' @param radius Numeric, radius of pie in plot units.
@@ -10,8 +10,7 @@
 #' @param border Character or integer, color(s) with which to draw border of pie slices.
 #' @param aspect Logical, if \code{TRUE} (default) then force a 1:1 aspect ratio of the pie relative to the plot axes. If the aspect ratio of the plot is not 1:1 then \code{radius} will equal the radius along the x-axis and the y-axis radius will be shrunk.
 #' @param ... Arguments to pass to \code{\link[graphics]{polygon}} if \code{add = TRUE} or \code{\link[graphics]{pie}} if \code{add = FALSE}.
-
-#' @seealso \code{\link{graphics::pie}} \code{\link{graphics::polygon}}
+#' @seealso \code{\link[graphics]{pie}} \code{\link[graphics]{polygon}}
 #' @examples
 #' plot(0, 0, xlim=c(-1, 1), ylim=c(-1, 1))
 #' pies(1:3, add=TRUE)
