@@ -25,7 +25,7 @@
 #' }
 #' @param ... Arguments to pass to \code{\link[graphics]{plot}}, \code{\link[graphics]{polygon}}, or \code{\link[graphics]{text}}.
 #' @return Nothing (side effect is to add a legend to an existing graphics device).
-#' @seealso \code{\link[graphics]{legend}}
+#' @seealso \code{\link[graphics]{legend}}, \code{\link[legendary]{legendQuad}}
 #' @examples
 #' wealth <- data.frame(
 #' 	country = c('USA', 'Japan', 'Malaysia', 'Germany', 'England',
@@ -81,12 +81,12 @@
 legendGrad <- function(
 	x,
 	y = NULL,
-	inset = 0.01,
-	width = 0.1,
-	height = 0.8,
+	inset = 0,
+	width = 0.2,
+	height = 0.5,
 	labels = NULL,
 	labAdj = 0.75,
-	col = c('white', 'black'),
+	col = c('yellow', 'orange', 'red'),
 	border = 'black',
 	title = 'Title',
 	titleAdj = c(0.5, 0.9),
@@ -158,8 +158,8 @@ legendGrad <- function(
 	# get gradient bounding box
 	left <- x + gradAdjX[1] * legWidth
 	right <- x + gradAdjX[2] * legWidth
-	bottom <- y - (1 - gradAdjY[2]) * legHeight
-	top <- y - (1 - gradAdjY[1]) * legHeight
+	top <- y - (1 - gradAdjY[2]) * legHeight
+	bottom <- y - (1 - gradAdjY[1]) * legHeight
 
 	gradHeight <- top - bottom
 
@@ -174,7 +174,6 @@ legendGrad <- function(
 
 		labY <- seq(top, bottom, length.out=length(labels))
 		text(x + legWidth * rep(labAdj, length(labels)), labY, labels=labels, pos=4, xpd=NA, ...)
-
 	}
 
 	# add swatches
@@ -182,12 +181,11 @@ legendGrad <- function(
 
 		for (i in seq_along(swatches)) {
 
-			top <- y - swatches[[i]]$swatchAdjY[1] * legHeight
-			bottom <- y - swatches[[i]]$swatchAdjY[2] * legHeight
+			top <- y - (1 - swatches[[i]]$swatchAdjY[1]) * legHeight
+			bottom <- y - (1 - swatches[[i]]$swatchAdjY[2]) * legHeight
 
-			graphics::polygon(c(left, right, right, left), c(bottom, bottom, top, top), col=swatches[[i]]$col, border=swatches[[i]]$border, xpd=NA, ...)
-			labY <- top <- y - mean(swatches[[i]]$swatchAdjY) * legHeight
-
+			graphics::polygon(c(left, right, right, left), c(bottom, bottom, top, top), col=swatches[[i]]$col, border=swatches[[i]]$border, ...)
+			labY <- top <- y - (1 - (mean(c(swatches[[i]]$swatchAdjY[[1]], swatches[[i]]$swatchAdjY[[2]])))) * legHeight
 			text(x + legWidth * labAdj, labY, labels=swatches[[i]]$labels, pos=4, xpd=NA, ...)
 
 		}

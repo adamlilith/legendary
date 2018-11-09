@@ -36,5 +36,5 @@ pies((1:10)^2, add=TRUE, xPos=1, yPos=0.5, radius=0.2)
 pies(c(1, 10), add=TRUE, xPos=-0.5, yPos=0, radius=0.4)
 }
 \seealso{
-\code{\link{graphics::pie}} \code{\link{graphics::polygon}}
+\code{\link[graphics]{pie}} \code{\link[graphics]{polygon}}
 }

@@ -4,9 +4,9 @@
 \alias{legendGrad}
 \title{Adds a gradient legend to a plot}
 \usage{
-legendGrad(x, y = NULL, inset = 0.01, width = 0.1, height = 0.8,
-  labels = NULL, labAdj = 0.75, col = c("white", "black"),
-  border = "black", title = "Title", titleAdj = c(0.5, 0.9),
+legendGrad(x, y = NULL, inset = 0, width = 0.2, height = 0.5,
+  labels = NULL, labAdj = 0.75, col = c("yellow", "orange", "red"),
+  border = "black", title = "", titleAdj = c(0.5, 0.9),
   gradAdjX = c(0.2, 0.5), gradAdjY = c(0.1, 0.8), boxBg = par("bg"),
   boxBorder = "black", swatches = NULL, ...)
 }
@@ -109,5 +109,5 @@ legendGrad(
 )
 }
 \seealso{
-\code{\link[graphics]{legend}}
+\code{\link[graphics]{legend}}, \code{\link[legendary]{legendQuad}}
 }

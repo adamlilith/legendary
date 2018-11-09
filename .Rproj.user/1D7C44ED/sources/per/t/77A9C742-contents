@@ -10,9 +10,8 @@ Description: This package is a collage of functions to create plots
 	plots which help visualize networks and correlations between
 	variables.
 Depends:
-    graphics
-Imports:
 	omnibus
+Imports:
 Suggests:
 	IDPmisc
 License: GPL-3
