@@ -5,14 +5,17 @@
 #' @param x2 Numeric, vector of values for the right-hand side of the plot, must be same length as \code{x1}.
 #' @param sameScale Logical, if \code{TRUE} (default) then use the same scale for both sides of the plot. If \code{FALSE}, then each side will have its own scale determined automatically \emph{unless} \code{xlim1} and/or \code{xlim2} are non-\code{NULL}.
 #' @param xlim1,xlim2 Two numeric values defining the x-axis limits for \code{x1} and \code{x2}. Alternatively, if one or both are \code{NULL} (default), then the scale is determined automatically for either or both.
-#' @param xlab1,xlab2 Characters, names of each x-axis label. Note that by default these aare used but if \code{xlab} is non-\code{NULL}, then it is used insetad.
+#' @param tickLabelOffset Numeric, offset (in y-direction) of labels for x-axis tick marks.
+#' @param xlab1,xlab2 Characters, names of each x-axis label. Note that by default these are used but if \code{xlab} is non-\code{NULL}, then it is used insetad.
 #' @param xlab Character, name of x-axis label.
+#' @param xlabOffset Numeric, offset (in y-direction) of x-axis label(s).
+#' @param tickSize Numeric, relative size of tick marks. Positive numbers grow them longer from the bottom of the x-axis, negative upward.
 #' @param labels Vector of same length as \code{x1} or \code{x2} with labels for bars. Can be numeric, character, integers, or anything else that prints. Default is \code{NULL}, in which case no labels are added.
 #' @param labelSide Character, either \code{left}, \code{right}, or \code{both}, indicating side on which bar labels are drawn.
+#' @param labelOffset Numeric, offset (from border or plot region) for positioning of labels. Positive numbers move labels outward, negative inward.
 #' @param cexLab Either \code{NA} (default) or a numeric > 0. Size of label text.
 #' @param col1,col2 Colors of bars.
 #' @param border1,border2 Border colors of bars.
-#' @param lwd Border widths of bars.
 #' @param ... Arguments to pass to \code{\link[graphics]{par}} or \code{\link[graphics]{plot}}.
 #' @details
 #' @return None. Side-effect is to generate a plot.
@@ -28,13 +31,21 @@
 pancakes <- function(
 	x1, x2,
 	sameScale = TRUE,
-	xlim1 = NULL, xlim2 = NULL,
-	xlab1 = 'x1', xlab2 = 'x2', xlab = NULL,
-	labels = NULL, labelSide = 'both',
+	xlim1 = NULL,
+	xlim2 = NULL,
+	tickLabelOffset = -0.05,
+	xlab1 = 'x1',
+	xlab2 = 'x2',
+	xlab = NULL,
+	xlabOffset = -0.12,
+	tickSize = 0.01,
+	labels = NULL,
+	labelSide = 'both',
 	cexLab = 1,
-	col1 = 'gray70', col2 = 'gray30',
-	border1 = 'black', border2 = 'black',
-	lwd = 1,
+	col1 = 'gray70',
+	col2 = 'gray30',
+	border1 = 'black',
+	border2 = 'black',
 	...
 ) {
 
@@ -115,33 +126,33 @@ pancakes <- function(
 	if (!is.null(labels)) {
 		y <- seq_along(x1) / length(x1) - halfWidth
 		if (labelSide == 'left') {
-			text(x=-1.02, y=y, labels=labels, pos=2, xpd=NA, cex=cexLab, ...)
+			text(x=-1 - labelOffset, y=y, labels=labels, pos=2, xpd=NA, cex=cexLab, ...)
 		} else if (labelSide == 'right') {
-			text(x=1.02, y=y, labels=labels, pos=4, xpd=NA, cex=cexLab, ...)
+			text(x=1 + labelOffset, y=y, labels=labels, pos=4, xpd=NA, cex=cexLab, ...)
 		} else if (labelSide == 'both') {
-			text(x=-1.02, y=y, labels=labels, pos=2, xpd=NA, cex=cexLab, ...)
-			text(x=1.02, y=y, labels=labels, pos=4, xpd=NA, cex=cexLab, ...)
+			text(x=-1 - labelOffset, y=y, labels=labels, pos=2, xpd=NA, cex=cexLab, ...)
+			text(x=1 + labelOffset, y=y, labels=labels, pos=4, xpd=NA, cex=cexLab, ...)
 		}
 	}
 
 	# add tick marks and values along left x-axis
 	ats <- x1scaler(xlim1)
-	for (i in seq_along(ats)) lines(x=c(ats[i], ats[i]), y=c(-0.01, -0.02), xpd=NA)
+	for (i in seq_along(ats)) lines(x=c(ats[i], ats[i]), y=c(-0.01, -0.01 - tickSize), xpd=NA)
 	labs <- c('', xlim1[2:length(xlim1)])
-	text(x=ats, y=-0.05 * cexLab, labels=labs, xpd=NA, ...)
+	text(x=ats, y=tickLabelOffset, labels=labs, xpd=NA, ...)
 	
 	# add tick marks and values along right x-axis
 	ats <- x2scaler(xlim2)
-	for (i in seq_along(ats)) lines(x=c(ats[i], ats[i]), y=c(-0.01, -0.02), xpd=NA)
+	for (i in seq_along(ats)) lines(x=c(ats[i], ats[i]), y=c(-0.01, -0.01 - tickSize), xpd=NA)
 	labs <- c('', xlim2[2:length(xlim2)])
-	text(x=ats, y=-0.05 * cexLab, labels=labs, xpd=NA, ...)
+	text(x=ats, y=tickLabelOffset, labels=labs, xpd=NA, ...)
 	
 	if (xlim1[1] == xlim2[1]) text(x=0, y=-0.05 * cexLab, labels=xlim1[1], xpd=NA, ...)
 	
 	# x-axis label
 	if (is.null(xlab)) {
-		text(x1scaler(mean(xlim1)), -0.12 * cexLab, labels=xlab1, xpd=NA, ...)
-		text(x2scaler(mean(xlim2)), -0.12 * cexLab, labels=xlab2, xpd=NA, ...)
+		text(x1scaler(mean(xlim1)), xlabOffset, labels=xlab1, xpd=NA, ...)
+		text(x2scaler(mean(xlim2)), xlabOffset, labels=xlab2, xpd=NA, ...)
 	} else {
 		text(0, -0.12 * cexLab, labels=xlab, xpd=NA, ...)
 	}
