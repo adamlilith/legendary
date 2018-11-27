@@ -6,7 +6,7 @@
 \usage{
 legendGrad(x, y = NULL, inset = 0, width = 0.2, height = 0.5,
   labels = NULL, labAdj = 0.75, col = c("yellow", "orange", "red"),
-  border = "black", title = "", titleAdj = c(0.5, 0.9),
+  border = "black", title = "Title", titleAdj = c(0.5, 0.9),
   gradAdjX = c(0.2, 0.5), gradAdjY = c(0.1, 0.8), boxBg = par("bg"),
   boxBorder = "black", swatches = NULL, ...)
 }
