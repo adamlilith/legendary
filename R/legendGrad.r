@@ -1,7 +1,7 @@
 #' Adds a gradient legend to a plot
 #'
 #' This function adds a legend to an existing plot that shows a gradient in color. It first draws a "containing" box then a bar with a color gradient inside the box. A legend title and labels for levels indicated by the color bar can be added.
-#' @param x Numeric or character. Describes the location of the legend. This is a numeric value (in which case \code{y} must also be supplied) indicating the x-coordinate of the top left of the box surrounding the legend. Alternatively, it is a character describing the position of the box surrounding the legend relative to the existing plot (\code{'topleft'}, \code{'topright'}, \code{'bottomleft'}, \code{'bottomright'}, \code{'top'}, \code{'bottom'}, \code{'left'}, or \code{'right'}).
+#' @param x Numeric or character. Describes the location of the legend. This is a numeric value (in which case \code{y} must also be supplied) indicating the x-coordinate of the top left of the box surrounding the legend. Alternatively, it is a character describing the position of the box surrounding the legend relative to the existing plot (\code{'topleft'}, \code{'topright'}, \code{'bottomleft'}, \code{'bottomright'}, \code{'top'}, \code{'bottom'}, \code{'left'}, \code{'right'}, or \code{'center'}).
 #' @param y Numeric or \code{NULL}.
 #' @param inset Numeric. If \code{x} is a word describing the position of the legend, then this is the degree to which the legend is inset (or outset, if negative) relative to the figure's border. If two values are supplied then the first pertains to the horizontal offset and the second the vertical offset.
 #' @param width Numeric. Scaling factor for box width.
@@ -138,6 +138,9 @@ legendGrad <- function(
 			y <- pos[3] + 0.5 * plotHeight + 0.5 * legHeight
 		} else if (x == 'right') {
 			x <- pos[2] - xInset - legWidth
+			y <- pos[3] + 0.5 * plotHeight + 0.5 * legHeight
+		} else if (x == 'center') {
+			x <- pos[1] + 0.5 * (pos[2] - pos[1]) - 0.5 * legWidth
 			y <- pos[3] + 0.5 * plotHeight + 0.5 * legHeight
 		} else {
 			error('The "x" coordinate in function "legendGrad" must be a numeric value or\nan accepted position word (e.g., "top", "topleft", "bottomright", etc.).')
