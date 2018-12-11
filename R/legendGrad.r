@@ -1,4 +1,4 @@
-#' Adds a gradient legend to a plot
+#' Add a gradient legend to a plot
 #'
 #' This function adds a legend to an existing plot that shows a gradient in color. It first draws a "containing" box then a bar with a color gradient inside the box. A legend title and labels for levels indicated by the color bar can be added.
 #' @param x Numeric or character. Describes the location of the legend. This is a numeric value (in which case \code{y} must also be supplied) indicating the x-coordinate of the top left of the box surrounding the legend. Alternatively, it is a character describing the position of the box surrounding the legend relative to the existing plot (\code{'topleft'}, \code{'topright'}, \code{'bottomleft'}, \code{'bottomright'}, \code{'top'}, \code{'bottom'}, \code{'left'}, \code{'right'}, or \code{'center'}).
@@ -7,13 +7,13 @@
 #' @param width Numeric. Scaling factor for box width.
 #' @param height Numeric. Scaling factor for box height.
 #' @param labels Vector of characters of numeric values. Labels (from least to most) of levels of the focal variable indicated by the color ramp.
-#' @param labAdj Numeric between 0 and 1. Position of labels relative to the containing box.
+#' @param labAdj Numeric between 0 and 1. Horizontal position of labels relative to the containing box.
 #' @param col List of characters or integers. Names of colors to be used to create a gradient to fill the legend bar. The first color will be the lowest value and the last the highest value.
 #' @param border Character or integer. Name (or integer code) of color to use to draw border of the gradient bar.
 #' @param title Character or \code{NULL}. Name of title for the legend.
 #' @param titleAdj Two numeric values between 0 and 1. Position of the legend relative to the container box. The first pertains to horizontal positioning and the second vertical positioning.
-#' @param gradAdjX Two numeric values between 0 and 1. Size of the gradient bar in the x-dimension as a proportion of the container box size. The first pertains to the left side of the bar and the second the right side.
-#' @param gradAdjY Two numeric values between 0 and 1. Size of the gradient bar in the y-dimension as a proportion of the container box size. The first pertains to the bottom of the bar and the second the top.
+#' @param adjX Two numeric values between 0 and 1. Size of the gradient bar in the x-dimension as a proportion of the container box size. The first pertains to the left side of the bar and the second the right side.
+#' @param adjY Two numeric values between 0 and 1. Size of the gradient bar in the y-dimension as a proportion of the container box size. The first pertains to the bottom of the bar and the second the top.
 #' @param boxBg Character or integer. Name (or integer code) of color to use to use for box containing legend. Leave as \code{NULL} to not draw a box.
 #' @param boxBorder Character or integer. Name (or integer code) of color to use to use for box border containing legend. Leave as \code{NULL} to not draw a box border.
 #' @param swatches A list or lists, each of which contains information on extra "swatches" of a single color to add above/below/on the gradient bar. These are useful, for example, for describing data that does not fall into the range covered by the data (e.g., \code{NA}'s).  If \code{swatches} is \code{NULL} then it is ignored.  Otherwise, it is a list of lists, and each sublist defines a different swatch. Sublists have these elements:
@@ -63,8 +63,8 @@
 #' 	border = 'black',
 #' 	title = 'HIV (%)',
 #' 	titleAdj = c(0.5, 0.9),
-#' 	gradAdjX = c(0.2, 0.5),
-#' 	gradAdjY = c(0.2, 0.8),
+#' 	adjX = c(0.2, 0.5),
+#' 	adjY = c(0.2, 0.8),
 #' 	boxBorder = 'black',
 #' 	swatches=list(
 #' 		list(
@@ -84,14 +84,14 @@ legendGrad <- function(
 	inset = 0,
 	width = 0.2,
 	height = 0.5,
-	labels = NULL,
+	labels = c(0, 0.33, 0.67, 1),
 	labAdj = 0.75,
 	col = c('yellow', 'orange', 'red'),
 	border = 'black',
 	title = 'Title',
 	titleAdj = c(0.5, 0.9),
-	gradAdjX = c(0.2, 0.5),
-	gradAdjY = c(0.1, 0.8),
+	adjX = c(0.2, 0.5),
+	adjY = c(0.1, 0.8),
 	boxBg = par('bg'),
 	boxBorder = 'black',
 	swatches = NULL,
@@ -159,10 +159,10 @@ legendGrad <- function(
 	cols <- colFx(99)
 
 	# get gradient bounding box
-	left <- x + gradAdjX[1] * legWidth
-	right <- x + gradAdjX[2] * legWidth
-	top <- y - (1 - gradAdjY[2]) * legHeight
-	bottom <- y - (1 - gradAdjY[1]) * legHeight
+	left <- x + adjX[1] * legWidth
+	right <- x + adjX[2] * legWidth
+	top <- y - (1 - adjY[2]) * legHeight
+	bottom <- y - (1 - adjY[1]) * legHeight
 
 	gradHeight <- top - bottom
 

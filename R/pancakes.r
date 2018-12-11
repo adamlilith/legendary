@@ -17,7 +17,7 @@
 #' @param col1,col2 Colors of bars.
 #' @param border1,border2 Border colors of bars.
 #' @param ... Arguments to pass to \code{\link[graphics]{par}} or \code{\link[graphics]{plot}}.
-#' @details
+#' @details If you want to add elements (e.g., arrows) to the plot, then note that the x-axis is scaled fromm -1 to 1 with the two sets of bar plots abutting one another at x = 0. The y-axis is scaled from 0 to 1.
 #' @return None. Side-effect is to generate a plot.
 #' @seealso \code{\link{barplot}}
 #' @examples
@@ -57,11 +57,11 @@ pancakes <- function(
 	# actual plot will have natural range [-1, 1] along x-axis
 	# barplots will meet at x = 0
 	# y-axis will have natural range [0, 1]
-	
+
 	# establish plot
 	plot(0, type='n', axes=FALSE, ann=FALSE, xlim=c(-1, 1), ylim=c(0, 1), ...)
 	lines(x=c(-1, 1), y=c(-0.01, -0.01), xpd=NA, ...)
-	
+
 	# establish x-axes' limits
 	if (sameScale) {
 		if (is.null(xlim1) & is.null(xlim2)) {
@@ -85,43 +85,43 @@ pancakes <- function(
 			xlim2 <- pretty(x2)
 		}
 	}
-	
+
 	# create mapping function from x-axis's intended and natural scale
 	x1scaler <- function(x, low=xlim1[1], high=tail(xlim1, 1)) -(x - low) / (high - low)
 	x2scaler <- function(x, low=xlim2[1], high=tail(xlim2, 1)) (x - low) / (high - low)
-	
+
 	# bar width
 	width <- 1 / length(x1)
 	halfWidth <- w / 2
-	
+
 	# left side bars
 	sizes <- x1scaler(x1)
 	for (i in seq_along(x1)) {
-	
+
 		y <- i * 2 * halfWidth
-	
+
 		polygon(
 			x=c(0, 0, sizes[i], sizes[i]),
 			y=c(y - halfWidth, y + halfWidth, y + halfWidth, y - halfWidth) - halfWidth,
 			col=col1, border=border1, xpd=NA, ...
 		)
-		
+
 	}
 
 	# right side bars
 	sizes <- x2scaler(x2)
 	for (i in seq_along(x2)) {
-		
+
 		y <- i * 2 * halfWidth
-	
+
 		polygon(
 			x=c(0, 0, sizes[i], sizes[i]),
 			y=c(y - halfWidth, y + halfWidth, y + halfWidth, y - halfWidth) - halfWidth,
 			col=col2, border=border2, xpd=NA, ...
 		)
-		
+
 	}
-	
+
 	# add labels
 	if (!is.null(labels)) {
 		y <- seq_along(x1) / length(x1) - halfWidth
@@ -140,15 +140,15 @@ pancakes <- function(
 	for (i in seq_along(ats)) lines(x=c(ats[i], ats[i]), y=c(-0.01, -0.01 - tickSize), xpd=NA)
 	labs <- c('', xlim1[2:length(xlim1)])
 	text(x=ats, y=tickLabelOffset, labels=labs, xpd=NA, ...)
-	
+
 	# add tick marks and values along right x-axis
 	ats <- x2scaler(xlim2)
 	for (i in seq_along(ats)) lines(x=c(ats[i], ats[i]), y=c(-0.01, -0.01 - tickSize), xpd=NA)
 	labs <- c('', xlim2[2:length(xlim2)])
 	text(x=ats, y=tickLabelOffset, labels=labs, xpd=NA, ...)
-	
+
 	if (xlim1[1] == xlim2[1]) text(x=0, y=-0.05 * cexLab, labels=xlim1[1], xpd=NA, ...)
-	
+
 	# x-axis label
 	if (is.null(xlab)) {
 		text(x1scaler(mean(xlim1)), xlabOffset, labels=xlab1, xpd=NA, ...)
