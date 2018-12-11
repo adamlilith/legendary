@@ -89,7 +89,7 @@ legendGrad(
 	width = 0.23,
 	height = 0.3,
 	labels = 100 * pretty(wealth$hivPerc),
-	labAdj = 0.6,
+	labAdjX = 0.6,
 	col = c('white', 'red'),
 	border = 'black',
 	title = 'HIV (\%)',
@@ -105,7 +105,6 @@ legendGrad(
 			labels='NA'
 		)
 	)
-
 )
 }
 \seealso{

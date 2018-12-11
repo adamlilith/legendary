@@ -73,12 +73,13 @@ wealth <- data.frame(
 	hivPerc = c(0.03, 0.01, 0.40, 0.15, 0.16, NA, 0.29, 0.29)
 )
 
-# color ramp
-colFx <- grDevices::colorRampPalette(c('white', 'red'))
-cols <- colFx(100)
+# color categories
 hivPerc <- round(100 * wealth$hivPerc / max(wealth$hivPerc, na.rm=TRUE))
-cols <- cols[hivPerc]
-cols[is.na(cols)] <- 'gray'
+cols <- rep(NA, length(hivPerc))
+cols[hivPerc <= 33] <- 'lightsalmon'
+cols[hivPerc > 33 & hivPerc <= 67] <- 'red'
+cols[hivPerc > 67] <- 'darkred'
+cols[is.na(hivPerc)] <- 'gray'
 
 # rescale population (symbols size)
 popRescaled <- 1 + 3 * (log10(wealth$pop) - min(log10(wealth$pop)))
@@ -87,15 +88,16 @@ cex=popRescaled, bg=cols, xlab='GDP (Billion $)', ylab='GDP Per Capita ($)')
 text(wealth$gdp, wealth$perCapGdp, labels=as.character(wealth$country),
 pos=4, xpd=NA)
 
-legendGrad(
+legendBreaks(
 	x='bottomright',
 	y = NULL,
 	inset = 0.02,
 	width = 0.23,
-	height = 0.3,
-	labels = 100 * pretty(wealth$hivPerc),
-	labAdj = 0.6,
-	col = c('white', 'red'),
+	height = 0.7,
+	labels = c(33, 67),
+	labAdjX = 0.6,
+	labAdjY = c(0.33, 0.67),
+	col = c('lightsalmon', 'red', 'darkred'),
 	border = 'black',
 	title = 'HIV (\%)',
 	titleAdj = c(0.5, 0.9),
@@ -104,13 +106,12 @@ legendGrad(
 	boxBorder = 'black',
 	swatches=list(
 		list(
-			swatchAdjY=c(0.85, 0.95),
+			swatchAdjY=c(0.05, 0.15),
 			col='gray',
 			border='black',
 			labels='NA'
 		)
 	)
-
 )
 }
 \seealso{

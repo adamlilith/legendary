@@ -21,10 +21,10 @@
 #' religion$others <- rowSums(religion[ , c('unaffiliated', 'hindu', 'folk', 'other', 'jewish')])
 #' religs <- c('christian', 'muslim', 'buddhist', 'others')
 #' par(mfrow=c(1, 2))
-#' plotQuad(religion[ , religs], main='Religion by Country', radius=0.04)
-#' plotQuad(religion[ , religs], 'points', background=FALSE, main='Religion by Country', cex=2)
+#' quadPlot(religion[ , religs], main='Religion by Country', radius=0.04)
+#' quadPlot(religion[ , religs], 'points', background=FALSE, main='Religion by Country', cex=2)
 #' @export
-plotQuad <- function(
+quadPlot <- function(
 	x,
 	cols = c('white', 'cyan', 'black', 'red'),
 	main = '',
@@ -136,7 +136,7 @@ plotQuad <- function(
 			points(this$xy[['x']], this$xy[['y']], xpd=NA, bg=hsv(h=this$col[['h']], s=this$col[['s']], v=this$col[['v']]), ...)
 		
 		} else {
-			stop('Argument "style" in function "plotQuad()" must be either "pies" or "points".')
+			stop('Argument "style" in function "quadPlot()" must be either "pies" or "points".')
 		}
 	
 	}
