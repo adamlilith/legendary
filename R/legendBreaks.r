@@ -39,29 +39,31 @@
 #' 	hivPerc = c(0.03, 0.01, 0.40, 0.15, 0.16, NA, 0.29, 0.29)
 #' )
 #'
-#' # color ramp
-#' colFx <- grDevices::colorRampPalette(c('white', 'red'))
-#' cols <- colFx(100)
+#' # color categories
 #' hivPerc <- round(100 * wealth$hivPerc / max(wealth$hivPerc, na.rm=TRUE))
-#' cols <- cols[hivPerc]
-#' cols[is.na(cols)] <- 'gray'
-#'
+#' cols <- rep(NA, length(hivPerc))
+#' cols[hivPerc <= 33] <- 'lightsalmon'
+#' cols[hivPerc > 33 & hivPerc <= 67] <- 'red'
+#' cols[hivPerc > 67] <- 'darkred'
+#' cols[is.na(hivPerc)] <- 'gray'
+#' 
 #' # rescale population (symbols size)
 #' popRescaled <- 1 + 3 * (log10(wealth$pop) - min(log10(wealth$pop)))
 #' plot(wealth$gdp, wealth$perCapGdp, pch=21,
 #' cex=popRescaled, bg=cols, xlab='GDP (Billion $)', ylab='GDP Per Capita ($)')
 #' text(wealth$gdp, wealth$perCapGdp, labels=as.character(wealth$country),
 #' pos=4, xpd=NA)
-#'
-#' legendGrad(
+#' 
+#' legendBreaks(
 #' 	x='bottomright',
 #' 	y = NULL,
 #' 	inset = 0.02,
 #' 	width = 0.23,
-#' 	height = 0.3,
-#' 	labels = 100 * pretty(wealth$hivPerc),
-#' 	labAdj = 0.6,
-#' 	col = c('white', 'red'),
+#' 	height = 0.7,
+#' 	labels = c(33, 67),
+#' 	labAdjX = 0.6,
+#' 	labAdjY = c(0.33, 0.67),
+#' 	col = c('lightsalmon', 'red', 'darkred'),
 #' 	border = 'black',
 #' 	title = 'HIV (%)',
 #' 	titleAdj = c(0.5, 0.9),
@@ -70,13 +72,12 @@
 #' 	boxBorder = 'black',
 #' 	swatches=list(
 #' 		list(
-#' 			swatchAdjY=c(0.85, 0.95),
+#' 			swatchAdjY=c(0.05, 0.15),
 #' 			col='gray',
 #' 			border='black',
 #' 			labels='NA'
 #' 		)
 #' 	)
-#'
 #' )
 #' @export
 
@@ -104,11 +105,9 @@ legendBreaks <- function(
 
 	# catch errors
 	if (!is.null(labels)) if (length(labels) != length(labAdjY)) stop('Length of argument "labels" must be same as length of "labAdjY".')
-	if (!is.null(labels)) if (length(labels) + 1 != length(cols)) stop('Length of argument "labels" must be one more than length of "cols".')
-	if (!is.null(labels)) if (length(labAdjY) + 1 != length(cols)) stop('Length of argument "labAdjY" must be one more than length of "cols".')
 
 	# number of color blocks
-	numCols <- length(cols)
+	numCols <- length(col)
 	
 	# get coordinate stats for existing plot
 	pos <- par('usr')
@@ -172,17 +171,19 @@ legendBreaks <- function(
 	top <- y - (1 - adjY[2]) * legHeight
 	bottom <- y - (1 - adjY[1]) * legHeight
 
+	# get each patch's box dimensions
 	blockHeight <- top - bottom
 	eachBlockHeight <- blockHeight / numCols
 
+	# plot each patch
 	for (countCol in seq_along(col)) {
 	
 		thisCol <- col[countCol]
-		thisBottom <- eachBlockHeight * (countCol - 1)
-		thisTop <- eachBlockHeight * countCol
+		thisBottom <- bottom + eachBlockHeight * (countCol - 1)
+		thisTop <- bottom + eachBlockHeight * countCol
 
 		xs <- c(left, right, right, left)
-		ys <- bottom + c(thisBottom, thisBottom, thisTop, thisTop)
+		ys <- c(thisBottom, thisBottom, thisTop, thisTop)
 		
 		graphics::polygon(
 			x=xs,

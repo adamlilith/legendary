@@ -58,7 +58,7 @@
 #' 	width = 0.23,
 #' 	height = 0.3,
 #' 	labels = 100 * pretty(wealth$hivPerc),
-#' 	labAdj = 0.6,
+#' 	labAdjX = 0.6,
 #' 	col = c('white', 'red'),
 #' 	border = 'black',
 #' 	title = 'HIV (%)',
@@ -68,13 +68,12 @@
 #' 	boxBorder = 'black',
 #' 	swatches=list(
 #' 		list(
-#' 			swatchAdjY=c(0.85, 0.95),
+#' 			swatchAdjY=c(0.05, 0.15),
 #' 			col='gray',
 #' 			border='black',
 #' 			labels='NA'
 #' 		)
 #' 	)
-#'
 #' )
 #' @export
 
