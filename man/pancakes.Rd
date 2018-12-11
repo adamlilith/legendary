@@ -49,6 +49,9 @@ None. Side-effect is to generate a plot.
 \description{
 This function plots two horizontal barplots back-to-back.
 }
+\details{
+If you want to add elements (e.g., arrows) to the plot, then note that the x-axis is scaled fromm -1 to 1 with the two sets of bar plots abutting one another at x = 0. The y-axis is scaled from 0 to 1.
+}
 \examples{
 x1 <- 10:1
 x2 <- sample(11:20, 10)
