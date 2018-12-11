@@ -2,6 +2,7 @@
 
 export(annulus)
 export(colorFrom4Vector)
+export(legendBreaks)
 export(legendGrad)
 export(legendQuad)
 export(pancakes)

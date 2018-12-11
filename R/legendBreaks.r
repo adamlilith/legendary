@@ -1,24 +1,26 @@
-#' Add a gradient legend to a plot
+#' Add a legend with thresholded values to a plot
 #'
-#' This function adds a legend to an existing plot that shows a gradient in color. It first draws a "containing" box then a bar with a color gradient inside the box. A legend title and labels for levels indicated by the color bar can be added.
+#' This function adds a legend to an existing plot that shows blocks of color. It is useful, for example, for displaying maps of continuous values that have been thresholded at multiple values. It first draws a "containing" box then inside the box a second box with a set of stacked bars, one per color. A legend title and labels for levels indicated by the color bar can be added.
 #' @param x Numeric or character. Describes the location of the legend. This is a numeric value (in which case \code{y} must also be supplied) indicating the x-coordinate of the top left of the box surrounding the legend. Alternatively, it is a character describing the position of the box surrounding the legend relative to the existing plot (\code{'topleft'}, \code{'topright'}, \code{'bottomleft'}, \code{'bottomright'}, \code{'top'}, \code{'bottom'}, \code{'left'}, \code{'right'}, or \code{'center'}).
 #' @param y Numeric or \code{NULL}.
 #' @param inset Numeric. If \code{x} is a word describing the position of the legend, then this is the degree to which the legend is inset (or outset, if negative) relative to the figure's border. If two values are supplied then the first pertains to the horizontal offset and the second the vertical offset.
 #' @param width Numeric. Scaling factor for box width.
 #' @param height Numeric. Scaling factor for box height.
 #' @param labels Vector of characters of numeric values. Labels (from least to most) of levels of the focal variable indicated by the color ramp.
-#' @param labAdj Numeric between 0 and 1. Horizontal position of labels relative to the containing box.
-#' @param col List of characters or integers. Names of colors to be used to create a gradient to fill the legend bar. The first color will be the lowest value and the last the highest value.
-#' @param border Character or integer. Name (or integer code) of color to use to draw border of the gradient bar.
+#' @param labAdjX Numeric between 0 and 1. Horizontal position of labels relative to the containing box.
+#' @param labAdjY Vectors of numbers typically between 0 and 1 indicating relative position of \code{labels} along the color bar. The bottommost value is at 0 and topmost at 1.
+#' @param col List of characters or integers. Names of colors. The first color will be the lowest value and the last the highest value.
+#' @param colBorder Characters or integer. Names of color to be used to draw an outline around each color in the color box. Use \code{NA} (default) to skip drawing an outline.
+#' @param border Character or integer. Name (or integer code) of color to use to draw border of the color bar.
 #' @param title Character or \code{NULL}. Name of title for the legend.
 #' @param titleAdj Two numeric values between 0 and 1. Position of the legend relative to the container box. The first pertains to horizontal positioning and the second vertical positioning.
-#' @param adjX Two numeric values between 0 and 1. Size of the gradient bar in the x-dimension as a proportion of the container box size. The first pertains to the left side of the bar and the second the right side.
-#' @param adjY Two numeric values between 0 and 1. Size of the gradient bar in the y-dimension as a proportion of the container box size. The first pertains to the bottom of the bar and the second the top.
+#' @param adjX Two numeric values between 0 and 1. Size of the color bar in the x-dimension as a proportion of the container box size. The first pertains to the left side of the bar and the second the right side.
+#' @param adjY Two numeric values between 0 and 1. Size of the color bar in the y-dimension as a proportion of the container box size. The first pertains to the bottom of the bar and the second the top.
 #' @param boxBg Character or integer. Name (or integer code) of color to use to use for box containing legend. Leave as \code{NULL} to not draw a box.
 #' @param boxBorder Character or integer. Name (or integer code) of color to use to use for box border containing legend. Leave as \code{NULL} to not draw a box border.
-#' @param swatches A list or lists, each of which contains information on extra "swatches" of a single color to add above/below/on the gradient bar. These are useful, for example, for describing data that does not fall into the range covered by the data (e.g., \code{NA}'s).  If \code{swatches} is \code{NULL} then it is ignored.  Otherwise, it is a list of lists, and each sublist defines a different swatch. Sublists have these elements:
+#' @param swatches A list or lists, each of which contains information on extra "swatches" of a single color to add above/below/on the color bar. These are useful, for example, for describing data that does not fall into the range covered by the data (e.g., \code{NA}'s).  If \code{swatches} is \code{NULL} then it is ignored.  Otherwise, it is a list of lists, and each sublist defines a different swatch. Sublists have these elements:
 #' \itemize{
-#' 	\item \code{swatchAdjY} Two numeric values between 0 and 1. Size of the swatches the x-dimension as a proportion of the container box size. The first pertains to the left side of the bar and the second the right side.  (Swatches will always be left-right aligned with the gradient bar.)
+#' 	\item \code{swatchAdjY} Two numeric values between 0 and 1. Size of the swatches the x-dimension as a proportion of the container box size. The first pertains to the left side of the bar and the second the right side.  (Swatches will always be left-right aligned with the color bar.)
 #' 	\item \code{col} Character or integer representing the swatch's color.
 #' 	\item \code{border} Character or integer. Name (or integer code) of color to use to draw border of the swatch.
 #' 	\item \code{labels} Character, for labelling the swatch.
@@ -78,15 +80,17 @@
 #' )
 #' @export
 
-legendGrad <- function(
+legendBreaks <- function(
 	x,
 	y = NULL,
 	inset = 0,
 	width = 0.2,
 	height = 0.5,
-	labels = c(0, 0.33, 0.67, 1),
-	labAdj = 0.75,
-	col = c('yellow', 'orange', 'red'),
+	labels = c(0.25, 0.50, 0.75),
+	labAdjX = 0.75,
+	labAdjY = c(0.25, 0.5, 0.75),
+	col = c('gray', 'yellow', 'orange', 'red'),
+	colBorder = NA,
 	border = 'black',
 	title = 'Title',
 	titleAdj = c(0.5, 0.9),
@@ -98,6 +102,14 @@ legendGrad <- function(
 	...
 ) {
 
+	# catch errors
+	if (!is.null(labels)) if (length(labels) != length(labAdjY)) stop('Length of argument "labels" must be same as length of "labAdjY".')
+	if (!is.null(labels)) if (length(labels) + 1 != length(cols)) stop('Length of argument "labels" must be one more than length of "cols".')
+	if (!is.null(labels)) if (length(labAdjY) + 1 != length(cols)) stop('Length of argument "labAdjY" must be one more than length of "cols".')
+
+	# number of color blocks
+	numCols <- length(cols)
+	
 	# get coordinate stats for existing plot
 	pos <- par('usr')
 
@@ -154,29 +166,43 @@ legendGrad <- function(
 	# legend title
 	graphics::text(x + titleAdj[1] * legWidth, y - (1 - titleAdj[2]) * legHeight, labels=title, xpd=NA, ...)
 
-	# color gradient
-	colFx <- grDevices::colorRampPalette(col)
-	cols <- colFx(99)
-
-	# get gradient bounding box
+	# get color bounding box
 	left <- x + adjX[1] * legWidth
 	right <- x + adjX[2] * legWidth
 	top <- y - (1 - adjY[2]) * legHeight
 	bottom <- y - (1 - adjY[1]) * legHeight
 
-	gradHeight <- top - bottom
+	blockHeight <- top - bottom
+	eachBlockHeight <- blockHeight / numCols
 
-	# plot (use many small rectangles)
-	yInc <- seq(bottom, top, length.out=100)
+	for (countCol in seq_along(col)) {
+	
+		thisCol <- col[countCol]
+		thisBottom <- eachBlockHeight * (countCol - 1)
+		thisTop <- eachBlockHeight * countCol
 
-	for (i in 1:99) graphics::polygon(c(left, right, right, left), c(yInc[i], yInc[i], yInc[i + 1], yInc[i + 1]), col=cols[i], border=NA, xpd=NA, ...)
+		xs <- c(left, right, right, left)
+		ys <- bottom + c(thisBottom, thisBottom, thisTop, thisTop)
+		
+		graphics::polygon(
+			x=xs,
+			y=ys,
+			col=thisCol,
+			border=colBorder,
+			xpd=NA,
+			...
+		)
+		
+	} # next color box
+
+	# border around all colors
 	if (!is.na(border)) graphics::polygon(c(left, right, right, left), c(bottom, bottom, top, top), col=NA, border=border, xpd=NA, ...)
 
 	# add labels
 	if (!is.null(labels)) {
 
-		labY <- seq(bottom, top, length.out=length(labels))
-		text(x + legWidth * rep(labAdj, length(labels)), labY, labels=labels, pos=4, xpd=NA, ...)
+		labY <- bottom + labAdjY * (top - bottom)
+		text(x + legWidth * rep(labAdjX, length(labels)), labY, labels=labels, pos=4, xpd=NA, ...)
 	}
 
 	# add swatches
@@ -189,7 +215,7 @@ legendGrad <- function(
 
 			graphics::polygon(c(left, right, right, left), c(bottom, bottom, top, top), col=swatches[[i]]$col, border=swatches[[i]]$border, ...)
 			labY <- top <- y - (1 - (mean(c(swatches[[i]]$swatchAdjY[[1]], swatches[[i]]$swatchAdjY[[2]])))) * legHeight
-			text(x + legWidth * labAdj, labY, labels=swatches[[i]]$labels, pos=4, xpd=NA, ...)
+			text(x + legWidth * labAdjX, labY, labels=swatches[[i]]$labels, pos=4, xpd=NA, ...)
 
 		}
 
