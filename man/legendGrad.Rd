@@ -4,11 +4,12 @@
 \alias{legendGrad}
 \title{Add a gradient legend to a plot}
 \usage{
-legendGrad(x, y = NULL, inset = 0, width = 0.2, height = 0.5,
-  labels = c(0, 0.33, 0.67, 1), labAdj = 0.75, col = c("yellow",
-  "orange", "red"), border = "black", title = "Title",
-  titleAdj = c(0.5, 0.9), adjX = c(0.2, 0.5), adjY = c(0.1, 0.8),
-  boxBg = par("bg"), boxBorder = "black", swatches = NULL, ...)
+legendGrad(x, y = NULL, inset = 0, vert = TRUE, width = 0.2,
+  height = 0.5, labels = c(0, 0.33, 0.67, 1), labAdj = 0.75,
+  col = c("yellow", "orange", "red"), border = "black",
+  title = "Title", titleAdj = c(0.5, 0.9), adjX = c(0.2, 0.5),
+  adjY = c(0.1, 0.8), boxBg = par("bg"), boxBorder = "black",
+  swatches = NULL, ...)
 }
 \arguments{
 \item{x}{Numeric or character. Describes the location of the legend. This is a numeric value (in which case \code{y} must also be supplied) indicating the x-coordinate of the top left of the box surrounding the legend. Alternatively, it is a character describing the position of the box surrounding the legend relative to the existing plot (\code{'topleft'}, \code{'topright'}, \code{'bottomleft'}, \code{'bottomright'}, \code{'top'}, \code{'bottom'}, \code{'left'}, \code{'right'}, or \code{'center'}).}
@@ -17,13 +18,15 @@ legendGrad(x, y = NULL, inset = 0, width = 0.2, height = 0.5,
 
 \item{inset}{Numeric. If \code{x} is a word describing the position of the legend, then this is the degree to which the legend is inset (or outset, if negative) relative to the figure's border. If two values are supplied then the first pertains to the horizontal offset and the second the vertical offset.}
 
+\item{vert}{Logical, if \code{TRUE} (default), then the gradient will be drawn vertically and labels plotted to the left or right of the gradient. If \code{FALSE}, then the gradient will be drawn horizontally and labels will be plotted above or below the gradient. Note that if \code{vert} is \code{FALSE} then many of the default values will likely need to be changed.}
+
 \item{width}{Numeric. Scaling factor for box width.}
 
 \item{height}{Numeric. Scaling factor for box height.}
 
 \item{labels}{Vector of characters of numeric values. Labels (from least to most) of levels of the focal variable indicated by the color ramp.}
 
-\item{labAdj}{Numeric between 0 and 1. Horizontal position of labels relative to the containing box.}
+\item{labAdj}{Numeric between 0 and 1. If \code{vert} is \code{TRUE} then this is the horizontal position of labels relative to the containing box. If \code{vert} is \code{FALSE} then this is the vertical position relative to the containing box.}
 
 \item{col}{List of characters or integers. Names of colors to be used to create a gradient to fill the legend bar. The first color will be the lowest value and the last the highest value.}
 
@@ -31,7 +34,7 @@ legendGrad(x, y = NULL, inset = 0, width = 0.2, height = 0.5,
 
 \item{title}{Character or \code{NULL}. Name of title for the legend.}
 
-\item{titleAdj}{Two numeric values between 0 and 1. Position of the legend relative to the container box. The first pertains to horizontal positioning and the second vertical positioning.}
+\item{titleAdj}{Two numeric values between 0 and 1. Position of the legend title relative to the container box. The first pertains to horizontal positioning and the second vertical positioning.}
 
 \item{adjX}{Two numeric values between 0 and 1. Size of the gradient bar in the x-dimension as a proportion of the container box size. The first pertains to the left side of the bar and the second the right side.}
 
@@ -99,7 +102,7 @@ legendGrad(
 	boxBorder = 'black',
 	swatches=list(
 		list(
-			swatchAdjY=c(0.85, 0.95),
+			swatchAdjY=c(0.05, 0.15),
 			col='gray',
 			border='black',
 			labels='NA'
