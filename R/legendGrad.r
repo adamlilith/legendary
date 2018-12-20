@@ -4,14 +4,15 @@
 #' @param x Numeric or character. Describes the location of the legend. This is a numeric value (in which case \code{y} must also be supplied) indicating the x-coordinate of the top left of the box surrounding the legend. Alternatively, it is a character describing the position of the box surrounding the legend relative to the existing plot (\code{'topleft'}, \code{'topright'}, \code{'bottomleft'}, \code{'bottomright'}, \code{'top'}, \code{'bottom'}, \code{'left'}, \code{'right'}, or \code{'center'}).
 #' @param y Numeric or \code{NULL}.
 #' @param inset Numeric. If \code{x} is a word describing the position of the legend, then this is the degree to which the legend is inset (or outset, if negative) relative to the figure's border. If two values are supplied then the first pertains to the horizontal offset and the second the vertical offset.
+#' @param vert Logical, if \code{TRUE} (default), then the gradient will be drawn vertically and labels plotted to the left or right of the gradient. If \code{FALSE}, then the gradient will be drawn horizontally and labels will be plotted above or below the gradient. Note that if \code{vert} is \code{FALSE} then many of the default values will likely need to be changed.
 #' @param width Numeric. Scaling factor for box width.
 #' @param height Numeric. Scaling factor for box height.
 #' @param labels Vector of characters of numeric values. Labels (from least to most) of levels of the focal variable indicated by the color ramp.
-#' @param labAdj Numeric between 0 and 1. Horizontal position of labels relative to the containing box.
+#' @param labAdj Numeric between 0 and 1. If \code{vert} is \code{TRUE} then this is the horizontal position of labels relative to the containing box. If \code{vert} is \code{FALSE} then this is the vertical position relative to the containing box.
 #' @param col List of characters or integers. Names of colors to be used to create a gradient to fill the legend bar. The first color will be the lowest value and the last the highest value.
 #' @param border Character or integer. Name (or integer code) of color to use to draw border of the gradient bar.
 #' @param title Character or \code{NULL}. Name of title for the legend.
-#' @param titleAdj Two numeric values between 0 and 1. Position of the legend relative to the container box. The first pertains to horizontal positioning and the second vertical positioning.
+#' @param titleAdj Two numeric values between 0 and 1. Position of the legend title relative to the container box. The first pertains to horizontal positioning and the second vertical positioning.
 #' @param adjX Two numeric values between 0 and 1. Size of the gradient bar in the x-dimension as a proportion of the container box size. The first pertains to the left side of the bar and the second the right side.
 #' @param adjY Two numeric values between 0 and 1. Size of the gradient bar in the y-dimension as a proportion of the container box size. The first pertains to the bottom of the bar and the second the top.
 #' @param boxBg Character or integer. Name (or integer code) of color to use to use for box containing legend. Leave as \code{NULL} to not draw a box.
@@ -81,6 +82,7 @@ legendGrad <- function(
 	x,
 	y = NULL,
 	inset = 0,
+	vert = TRUE,
 	width = 0.2,
 	height = 0.5,
 	labels = c(0, 0.33, 0.67, 1),
@@ -166,16 +168,32 @@ legendGrad <- function(
 	gradHeight <- top - bottom
 
 	# plot (use many small rectangles)
-	yInc <- seq(bottom, top, length.out=100)
+	if (vert) {
+		
+		inc <- seq(bottom, top, length.out=100)
 
-	for (i in 1:99) graphics::polygon(c(left, right, right, left), c(yInc[i], yInc[i], yInc[i + 1], yInc[i + 1]), col=cols[i], border=NA, xpd=NA, ...)
+		for (i in 1:99) graphics::polygon(c(left, right, right, left), c(inc[i], inc[i], inc[i + 1], inc[i + 1]), col=cols[i], border=NA, xpd=NA, ...)
+		
+	} else {
+	
+		inc <- seq(left, right, length.out=100)
+		for (i in 1:99) graphics::polygon(c(inc[i], inc[i + 1], inc[i + 1], inc[i]), c(bottom, bottom, top, top), col=cols[i], border=NA, xpd=NA, ...)
+		
+	}
+		
 	if (!is.na(border)) graphics::polygon(c(left, right, right, left), c(bottom, bottom, top, top), col=NA, border=border, xpd=NA, ...)
 
 	# add labels
 	if (!is.null(labels)) {
 
-		labY <- seq(bottom, top, length.out=length(labels))
-		text(x + legWidth * rep(labAdj, length(labels)), labY, labels=labels, pos=4, xpd=NA, ...)
+		if (vert) {
+			labY <- seq(bottom, top, length.out=length(labels))
+			text(x + legWidth * rep(labAdj, length(labels)), labY, labels=labels, pos=4, xpd=NA, ...)
+		} else {
+			labX <- seq(left, right, length.out=length(labels))
+			text(labX, y + legHeight * rep(labAdj, length(labels)), labels=labels, xpd=NA, ...)
+		}
+		
 	}
 
 	# add swatches
