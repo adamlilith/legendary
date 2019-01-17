@@ -204,7 +204,7 @@ legendGrad <- function(
 			top <- y - (1 - swatches[[i]]$swatchAdjY[1]) * legHeight
 			bottom <- y - (1 - swatches[[i]]$swatchAdjY[2]) * legHeight
 
-			graphics::polygon(c(left, right, right, left), c(bottom, bottom, top, top), col=swatches[[i]]$col, border=swatches[[i]]$border, ...)
+			graphics::polygon(x=c(left, right, right, left), y=c(bottom, bottom, top, top), col=swatches[[i]]$col, border=swatches[[i]]$border, xpd=NA, ...)
 			labY <- top <- y - (1 - (mean(c(swatches[[i]]$swatchAdjY[[1]], swatches[[i]]$swatchAdjY[[2]])))) * legHeight
 			text(x + legWidth * labAdj, labY, labels=swatches[[i]]$labels, pos=4, xpd=NA, ...)
 

@@ -17,7 +17,7 @@ You can install this package in R using these commands:
 ## New legends ##
 * `legendBreaks`: Legend with stacked, colored bars useful for displaying, for example, maps of continuous values that have been thresholded using multiple values
 * `legendGrad`: Legend with a color gradient
-* `legendQuad`: Legend for data with proportional degrees of four categories (cf. `quadPlot')
+* `legendQuad`: Legend for data with proportional degrees of four categories (cf. `quadPlot`)
 
 ## Auxiliary ###
 * `colorFrom4Vector`: Transforms a vector of four values to HSV color plus coordinates on a `quadPlot`
