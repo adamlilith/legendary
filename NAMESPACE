@@ -2,6 +2,8 @@
 
 export(annulus)
 export(colorFrom4Vector)
+export(getFig)
+export(labelFig)
 export(legendBreaks)
 export(legendGrad)
 export(legendQuad)
