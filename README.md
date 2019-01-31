@@ -21,3 +21,4 @@ You can install this package in R using these commands:
 
 ## Auxiliary ###
 * `colorFrom4Vector`: Transforms a vector of four values to HSV color plus coordinates on a `quadPlot`
+* `getFig`: Return coordinates for `par(fig=xxxx)` for use with `layout` function for placing subplots.
