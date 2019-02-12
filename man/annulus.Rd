@@ -35,10 +35,11 @@ Nothing (side-effect is to add an annulus to an existing plot).
 This function adds an annulus to an existing plot.
 }
 \examples{
+par(pty='s')
 plot(0, 0, xlim=c(-1, 1), ylim=c(-1, 1))
-annulus(x=0.3, y=-0.2, inner=1, outer=0.6, col='cornflowerblue')
-annulus(x=-0.3, y=0.2, inner=1, outer=0.6, deg=c(0, 135), col='firebrick1', border='black')
+annulus(x=0.3, y=-0.2, inner=0.3, outer=1, col='cornflowerblue')
+annulus(x=-0.3, y=0.2, inner=0.2, outer=0.4, deg=c(0, 135), border='red')
 }
 \seealso{
-\code{\link[graphics]{polygon}}
+\code{\link[legendary]{annulusSeg}}, \code{\link[graphics]{polygon}}
 }
