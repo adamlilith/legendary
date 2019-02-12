@@ -12,11 +12,12 @@
 #' @param force0 Logical, if \code{TRUE} then negative values of inner and outer are coerced to equal 0. If \code{FALSE} then throws an error.
 #' @param ... Arguments to send to \code{\link[graphics]{polygon}}.
 #' @return Nothing (side-effect is to add an annulus to an existing plot).
-#' @seealso \code{\link[graphics]{polygon}}
+#' @seealso \code{\link[legendary]{annulusSeg}}, \code{\link[graphics]{polygon}}
 #' @examples
+#' par(pty='s')
 #' plot(0, 0, xlim=c(-1, 1), ylim=c(-1, 1))
-#' annulus(x=0.3, y=-0.2, inner=1, outer=0.6, col='cornflowerblue')
-#' annulus(x=-0.3, y=0.2, inner=1, outer=0.6, deg=c(0, 135), col='firebrick1', border='black')
+#' annulus(x=0.3, y=-0.2, inner=0.3, outer=1, col='cornflowerblue')
+#' annulus(x=-0.3, y=0.2, inner=0.2, outer=0.4, deg=c(0, 135), border='red')
 #' @export
 annulus <- function(
 	x,
