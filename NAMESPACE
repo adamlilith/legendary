@@ -2,6 +2,7 @@
 
 export(annulus)
 export(annulusSeg)
+export(arc)
 export(colorFrom4Vector)
 export(getFig)
 export(labelFig)
