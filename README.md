@@ -11,6 +11,8 @@ NB: If for some reason these commands don't work, you can install the package(s)
 
 ## New plots ##
 * `annulus`: Annulus (a circle with a hole)
+* `annulusSeg`: Segmented annuli (segments of circles with holes)
+* `arc`: Arcs (segments of circles)
 * `pancakes`: Side-by-side bar charts (useful for displaying female/male age structure, for example)
 * `pies`: Add a pie chart to a plot
 * `quadPlot`: 4-color/corner plot for data with proportional degrees of four categories
