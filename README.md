@@ -7,6 +7,8 @@ You can install this package in R using these commands:
 `library(devtools)`  
 `install_github('adamlilith/legendary')`  
 
+NB: If for some reason these commands don't work, you can install the package(s) by downloading the latest zip/tar file from the `zipTarFiles` directory and installing the package(s) manually.
+
 ## New plots ##
 * `annulus`: Annulus (a circle with a hole)
 * `pancakes`: Side-by-side bar charts (useful for displaying female/male age structure, for example)
