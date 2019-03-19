@@ -5,7 +5,7 @@
 \title{Plot an annulus on an existing plot.}
 \usage{
 annulus(x, y, inner, outer, deg = c(0, 360), n = 1000, col = "black",
-  border = col, force0 = FALSE, ...)
+  density = NULL, angle = 45, border = col, force0 = FALSE, ...)
 }
 \arguments{
 \item{x}{Numeric, x-coordinate of center of annulus.}
@@ -21,6 +21,10 @@ annulus(x, y, inner, outer, deg = c(0, 360), n = 1000, col = "black",
 \item{n}{Integer, number of vertices used to approximate a circle.}
 
 \item{col}{Character or integer, color used to fill annulus.  Note that if \code{col} and \code{border} are different colors and \code{deg} is \code{c(0, 360)} (the default), then you will able to see the line connecting the inner and outer borders.}
+
+\item{density}{Numeric, the density of shading lines, in lines per inch. The default value of \code{NULL} causes no shading lines to be drawn. A zero value of density means no shading nor filling whereas negative values and \code{NA} suppress shading (and so allow color filling).}
+
+\item{angle}{Numeric, the slope of shading lines, given as an angle in degrees (counter-clockwise).}
 
 \item{border}{Character or integer, color used to draw annulus border.  Note that if \code{col} and \code{border} are different colors and \code{deg} is \code{c(0, 360)} (the default), then you will able to see the line connecting the inner and outer borders.}
 

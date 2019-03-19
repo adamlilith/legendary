@@ -12,6 +12,8 @@
 #' 		\item{\code{NULL} (default), in which case each segment covers an equal number of degrees (same as the first option where each value is equal to the rest).
 #' @param n Integer, number of vertices used to approximate a circle.
 #' @param col Character or integer vector, colors used to fill segments.
+#' @param density Numeric or numeric vector, the density of shading lines, in lines per inch. The default value of \code{NULL} causes no shading lines to be drawn. A zero value of density means no shading nor filling whereas negative values and \code{NA} suppress shading (and so allow color filling).
+#' @param angle Numeric or numeric vector, the slope of shading lines, given as an angle in degrees (counter-clockwise).
 #' @param border Character or integer vector, color used to draw segment borders.
 #' @param force0 Logical, if \code{TRUE} then negative values of inner and outer are coerced to equal 0. If \code{FALSE} (default) then throws an error.
 #' @param ... Arguments to send to \code{\link[graphics]{polygon}}.
@@ -33,6 +35,8 @@ annulusSeg <- function(
 	deg=NULL,
 	n=1000,
 	col='black',
+	density=NULL,
+	angle=45,
 	border=col,
 	force0=FALSE,
 	...
@@ -86,7 +90,7 @@ annulusSeg <- function(
 		thisDeg <- deg[countSeg, ]
 		thisCol <- col[countSeg]
 		thisBorder <- border[countSeg]
-	
+
 		annulus(
 			x=x,
 			y=y,
@@ -97,6 +101,8 @@ annulusSeg <- function(
 			border=thisBorder,
 			n=n,
 			force0=force0,
+			density=density[countSeg],
+			angle=angle[countSeg],
 			...
 		)
 		
