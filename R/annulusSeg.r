@@ -70,12 +70,12 @@ annulusSeg <- function(
 		border <- c(border, rep(border, length.out=nSeg - nBorder))
 	}
 	
-	if (length(density) == 1) {
-		density <- rep(density, nSeg)
+	if (length(density) < nSeg) {
+		density <- rep(density, length.out=nSeg)
 	}
 
-	if (length(angle) == 1) {
-		angle <- rep(angle, nSeg)
+	if (length(angle) < nSeg) {
+		angle <- rep(angle, length.out=nSeg)
 	}
 
 	# segment lengths
