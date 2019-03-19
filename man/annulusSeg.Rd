@@ -5,7 +5,7 @@
 \title{Plot an annulus with different segments on an existing plot}
 \usage{
 annulusSeg(x, y, inner, outer, deg = NULL, n = 1000, col = "black",
-  border = col, force0 = FALSE, ...)
+  density = NULL, angle = 45, border = col, force0 = FALSE, ...)
 }
 \arguments{
 \item{x}{Numeric, x-coordinate of center of annulus.}
@@ -19,6 +19,10 @@ annulusSeg(x, y, inner, outer, deg = NULL, n = 1000, col = "black",
 \item{n}{Integer, number of vertices used to approximate a circle.}
 
 \item{col}{Character or integer vector, colors used to fill segments.}
+
+\item{density}{Numeric or numeric vector, the density of shading lines, in lines per inch. The default value of \code{NULL} causes no shading lines to be drawn. A zero value of density means no shading nor filling whereas negative values and \code{NA} suppress shading (and so allow color filling).}
+
+\item{angle}{Numeric or numeric vector, the slope of shading lines, given as an angle in degrees (counter-clockwise).}
 
 \item{border}{Character or integer vector, color used to draw segment borders.}
 

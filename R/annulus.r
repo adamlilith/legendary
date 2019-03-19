@@ -8,6 +8,8 @@
 #' @param deg Two-element numeric list, degrees across which to draw the annulus (0 is "north" and increasing values go clockwise). Default is \code{c(0, 360)}.
 #' @param n Integer, number of vertices used to approximate a circle.
 #' @param col Character or integer, color used to fill annulus.  Note that if \code{col} and \code{border} are different colors and \code{deg} is \code{c(0, 360)} (the default), then you will able to see the line connecting the inner and outer borders.
+#' @param density Numeric, the density of shading lines, in lines per inch. The default value of \code{NULL} causes no shading lines to be drawn. A zero value of density means no shading nor filling whereas negative values and \code{NA} suppress shading (and so allow color filling).
+#' @param angle Numeric, the slope of shading lines, given as an angle in degrees (counter-clockwise).
 #' @param border Character or integer, color used to draw annulus border.  Note that if \code{col} and \code{border} are different colors and \code{deg} is \code{c(0, 360)} (the default), then you will able to see the line connecting the inner and outer borders.
 #' @param force0 Logical, if \code{TRUE} then negative values of inner and outer are coerced to equal 0. If \code{FALSE} then throws an error.
 #' @param ... Arguments to send to \code{\link[graphics]{polygon}}.
@@ -27,6 +29,8 @@ annulus <- function(
 	deg=c(0, 360),
 	n=1000,
 	col='black',
+	density=NULL,
+	angle=45,
 	border=col,
 	force0=FALSE,
 	...
@@ -43,7 +47,7 @@ annulus <- function(
 		warning('Forcing outer radius to 0 because <0.')
 	}
 
-	### calculate innner/outer vertices in polar coordinates
+	### calculate inner/outer vertices in polar coordinates
 	theta <- seq((-deg[1] + 90) * pi / 180, (-deg[2] + 90) * pi / 180, length.out=n)
 	outerVerticesX <- x + outer * cos(theta)
 	outerVerticesY <- y + outer * sin(theta)
@@ -55,7 +59,7 @@ annulus <- function(
 	yCoords <- c(outerVerticesY, rev(innerVerticesY))
 
 	### plot
-	graphics::polygon(xCoords, yCoords, col=col, border=border)
+	graphics::polygon(xCoords, yCoords, col=col, border=border, density=density, ...)
 
 }
 

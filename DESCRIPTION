@@ -1,14 +1,14 @@
 Package: legendary
 Title: New types of plots and their legends 
-Version: 0.0.1.2
-Date: 2019-03-07
+Version: 0.0.1.3
+Date: 2019-03-19
 Author: Adam B. Smith <adam.smith@mobot.org>
 Maintainer: Adam B. Smith <adam.smith@mobot.org>
 Description: This package is a collage of functions to create plots
 	and their legends, including "quad" plots (in which responses
 	are one of four values), legends with gradients or thresholds,
-	and "spoke"	plots which help visualize networks and correlations
-	between variables.
+	"spoke" plots which help visualize networks and correlations
+	between variables, and "annulus" plots.
 Depends:
     graphics
 Imports:
