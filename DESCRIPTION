@@ -14,7 +14,7 @@ Depends:
 Imports:
 Suggests:
 	IDPmisc
-License: GPL-3
+License: GPL (>=3) + file LICENSE
 LazyData: true
 URL: http://www.earthSkySea.org
 RoxygenNote: 6.1.1
