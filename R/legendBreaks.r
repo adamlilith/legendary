@@ -204,6 +204,7 @@ legendBreaks <- function(
 
 		labY <- bottom + labAdjY * (top - bottom)
 		text(x + legWidth * rep(labAdjX, length(labels)), labY, labels=labels, pos=4, xpd=NA, ...)
+		
 	}
 
 	# add swatches
