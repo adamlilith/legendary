@@ -7,9 +7,10 @@
 #' @param outer Numeric vector, outer radius of each segment.
 #' @param deg This is either:
 #' \itemize{
-#' 		\item{A numeric vector with one value per segment. The values will be standardized, then each segment will compose an arc with the number of degrees proportional to the value relative to the sum of values.
-#' 		\item{A two-column matrix or data frame with numeric values. Each row pertains to one segment. The first column gives the starting degree for the segment and the second column the ending degree. Zero degrees is "north" and increasing values go clockwise.
-#' 		\item{\code{NULL} (default), in which case each segment covers an equal number of degrees (same as the first option where each value is equal to the rest).
+#' 		\item A numeric vector with one value per segment. The values will be standardized, then each segment will compose an arc with the number of degrees proportional to the value relative to the sum of values.
+#' 		\item A two-column matrix or data frame with numeric values. Each row pertains to one segment. The first column gives the starting degree for the segment and the second column the ending degree. Zero degrees is "north" and increasing values go clockwise.
+#' 		\item \code{NULL} (default), in which case each segment covers an equal number of degrees (same as the first option where each value is equal to the rest).
+#' }
 #' @param n Integer, number of vertices used to approximate a circle.
 #' @param col Character or integer vector, colors used to fill segments.
 #' @param density Numeric or numeric vector, the density of shading lines, in lines per inch. The default value of \code{NULL} causes no shading lines to be drawn. A zero value of density means no shading nor filling whereas negative values and \code{NA} suppress shading (and so allow color filling).
