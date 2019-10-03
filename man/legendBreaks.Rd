@@ -4,12 +4,12 @@
 \alias{legendBreaks}
 \title{Add a legend with thresholded values to a plot}
 \usage{
-legendBreaks(x, y = NULL, inset = 0, width = 0.2, height = 0.5,
-  labels = c(0.25, 0.5, 0.75), labAdjX = 0.75, labAdjY = c(0.25, 0.5,
-  0.75), col = c("gray", "yellow", "orange", "red"), colBorder = NA,
-  border = "black", title = "Title", titleAdj = c(0.5, 0.9),
-  adjX = c(0.2, 0.5), adjY = c(0.1, 0.8), boxBg = par("bg"),
-  boxBorder = "black", swatches = NULL, ...)
+legendBreaks(x, y = NULL, inset = 0, horiz = FALSE, width = 0.2,
+  height = 0.5, labels = c(0.25, 0.5, 0.75), labAdjX = 0.75,
+  labAdjY = c(0.25, 0.5, 0.75), col = c("gray", "yellow", "orange",
+  "red"), colBorder = NA, border = "black", title = "Title",
+  titleAdj = c(0.5, 0.9), adjX = c(0.2, 0.5), adjY = c(0.1, 0.8),
+  boxBg = par("bg"), boxBorder = "black", swatches = NULL, ...)
 }
 \arguments{
 \item{x}{Numeric or character. Describes the location of the legend. This is a numeric value (in which case \code{y} must also be supplied) indicating the x-coordinate of the top left of the box surrounding the legend. Alternatively, it is a character describing the position of the box surrounding the legend relative to the existing plot (\code{'topleft'}, \code{'topright'}, \code{'bottomleft'}, \code{'bottomright'}, \code{'top'}, \code{'bottom'}, \code{'left'}, \code{'right'}, or \code{'center'}).}
@@ -18,15 +18,17 @@ legendBreaks(x, y = NULL, inset = 0, width = 0.2, height = 0.5,
 
 \item{inset}{Numeric. If \code{x} is a word describing the position of the legend, then this is the degree to which the legend is inset (or outset, if negative) relative to the figure's border. If two values are supplied then the first pertains to the horizontal offset and the second the vertical offset.}
 
+\item{horiz}{Logical, if \code{FALSE} (default), color boxes are plotted in along a column. If \code{TRUE}, then color boxes are plotted along a row.}
+
 \item{width}{Numeric. Scaling factor for box width.}
 
 \item{height}{Numeric. Scaling factor for box height.}
 
 \item{labels}{Vector of characters of numeric values. Labels (from least to most) of levels of the focal variable indicated by the color ramp.}
 
-\item{labAdjX}{Numeric between 0 and 1. Horizontal position of labels relative to the containing box.}
+\item{labAdjX}{Numeric or numeric vector of values typically between 0 and 1. If \code{horiz} is \code{FALSE} (default), then this a single value indicating the horizontal position of labels relative to the colored part of the legend. If \code{horiz} is \code{TRUE}, then this is a vector of numbers typically between 0 and 1 indicating horizontal position of \code{labels} relative to the colored part of the legend (0 = left, 1 = right).}
 
-\item{labAdjY}{Vectors of numbers typically between 0 and 1 indicating relative position of \code{labels} along the color bar. The bottommost value is at 0 and topmost at 1.}
+\item{labAdjY}{Numeric vector of values or a single numeric value typically between 0 and 1. If \code{horiz} is \code{FALSE} (default), then this a vector of numbers typically between 0 and 1 indicating the vertical position of \code{labels} relative to the colord part of the legend (0 = bottom, 1 = top). If \code{horiz} is \code{TRUE}, then this is a single value indicating the vertical position of labels relative to the containing box.}
 
 \item{col}{List of characters or integers. Names of colors. The first color will be the lowest value and the last the highest value.}
 
@@ -36,11 +38,11 @@ legendBreaks(x, y = NULL, inset = 0, width = 0.2, height = 0.5,
 
 \item{title}{Character or \code{NULL}. Name of title for the legend.}
 
-\item{titleAdj}{Two numeric values between 0 and 1. Position of the legend relative to the container box. The first pertains to horizontal positioning and the second vertical positioning.}
+\item{titleAdj}{Two numeric values between 0 and 1. Position of the legend relative to the legend box. The first pertains to horizontal positioning and the second vertical positioning.}
 
-\item{adjX}{Two numeric values between 0 and 1. Size of the color bar in the x-dimension as a proportion of the container box size. The first pertains to the left side of the bar and the second the right side.}
+\item{adjX}{Two numeric values between 0 and 1. Size of the color bar in the x-dimension as a proportion of the legend box size. The first pertains to the left side of the bar and the second the right side.}
 
-\item{adjY}{Two numeric values between 0 and 1. Size of the color bar in the y-dimension as a proportion of the container box size. The first pertains to the bottom of the bar and the second the top.}
+\item{adjY}{Two numeric values between 0 and 1. Size of the color bar in the y-dimension as a proportion of the legend box size. The first pertains to the bottom of the bar and the second the top.}
 
 \item{boxBg}{Character or integer. Name (or integer code) of color to use to use for box containing legend. Leave as \code{NULL} to not draw a box.}
 
@@ -48,10 +50,11 @@ legendBreaks(x, y = NULL, inset = 0, width = 0.2, height = 0.5,
 
 \item{swatches}{A list or lists, each of which contains information on extra "swatches" of a single color to add above/below/on the color bar. These are useful, for example, for describing data that does not fall into the range covered by the data (e.g., \code{NA}'s).  If \code{swatches} is \code{NULL} then it is ignored.  Otherwise, it is a list of lists, and each sublist defines a different swatch. Sublists have these elements:
 \itemize{
-    \item \code{swatchAdjY} Two numeric values between 0 and 1. Size of the swatches the x-dimension as a proportion of the container box size. The first pertains to the left side of the bar and the second the right side.  (Swatches will always be left-right aligned with the color bar.)
+    \item \code{swatchAdjY} Two numeric values typically between 0 and 1. This is only used if \code{horiz = FALSE} (default). Size of the swatches the in y-dimension as a proportion of the legend box size. The first pertains to the bottom side of the swatch and the second the top side.
+    \item \code{swatchAdjX} Two numeric values typically between 0 and 1. This is only used if \code{horiz = TRUE}. Size of the swatches the in x-dimension as a proportion of the legend box size. The first pertains to the left side of the swatch and the second the right side.
     \item \code{col} Character or integer representing the swatch's color.
     \item \code{border} Character or integer. Name (or integer code) of color to use to draw border of the swatch.
-    \item \code{labels} Character, for labelling the swatch.
+    \item \code{labels} Character, for labeling the swatch.
 }}
 
 \item{...}{Arguments to pass to \code{\link[graphics]{plot}}, \code{\link[graphics]{polygon}}, or \code{\link[graphics]{text}}.}
@@ -63,55 +66,101 @@ Nothing (side effect is to add a legend to an existing graphics device).
 This function adds a legend to an existing plot that shows blocks of color. It is useful, for example, for displaying maps of continuous values that have been thresholded at multiple values. It first draws a "containing" box then inside the box a second box with a set of stacked bars, one per color. A legend title and labels for levels indicated by the color bar can be added.
 }
 \examples{
-wealth <- data.frame(
-	country = c('USA', 'Japan', 'Malaysia', 'Germany', 'England',
-'North Korea', 'South Korea', 'Nigeria'),
-	pop = c(325365189, 126672000, 31718000, 82175700,
-54786300, 25370000, 51446201, 185989640),
-	gdp = c(18558, 5420, 913.593, 4150, 1870, 12.38, 2029, 1166),
-	perCapGdp = c(145894, 57220, 28490, 50206, 34205, 583, 39446, 6351),
-	hivPerc = c(0.03, 0.01, 0.40, 0.15, 0.16, NA, 0.29, 0.29)
+data(welfare)
+
+# for visual clarity, put countries with high HIV on bottom
+# of data frame so they're plotted last
+welfare <- welfare[order(welfare$hivAge15to49_2018_perc), ]
+welfare <- rbind(
+	welfare[is.na(welfare$hivAge15to49_2018_perc), ],
+	welfare[!is.na(welfare$hivAge15to49_2018_perc), ]
 )
 
-# color categories
-hivPerc <- round(100 * wealth$hivPerc / max(wealth$hivPerc, na.rm=TRUE))
-cols <- rep(NA, length(hivPerc))
-cols[hivPerc <= 33] <- 'lightsalmon'
-cols[hivPerc > 33 & hivPerc <= 67] <- 'red'
-cols[hivPerc > 67] <- 'darkred'
-cols[is.na(hivPerc)] <- 'gray'
+pop <- welfare$population2019
+gdp <- welfare$gdp_2019usd
+hiv <- welfare$hivAge15to49_2018_perc
+hiv <- hiv / 100
 
-# rescale population (symbols size)
-popRescaled <- 1 + 3 * (log10(wealth$pop) - min(log10(wealth$pop)))
-plot(wealth$gdp, wealth$perCapGdp, pch=21,
-cex=popRescaled, bg=cols, xlab='GDP (Billion $)', ylab='GDP Per Capita ($)')
-text(wealth$gdp, wealth$perCapGdp, labels=as.character(wealth$country),
-pos=4, xpd=NA)
+gdpPerCap <- gdp / pop
+
+# color categories
+hivMax <- max(hiv, na.rm=TRUE)
+cols <- rep(NA, length(hiv))
+cols[hiv <= hivMax] <- 'darkred'
+cols[hiv <= 0.75 * hivMax] <- 'red'
+cols[hiv <= 0.5 * hivMax] <- 'lightsalmon'
+cols[hiv <= 0.25 * hivMax] <- 'white'
+cols[is.na(hiv)] <- 'gray'
+
+# legend label positions
+hivQuants <- hivMax * c(0, 0.25, 0.5, 0.75, 1)
+hivLabelPos <- c(0, hivQuants / hivMax)
+labels <- sprintf('\%.2f', c(0, hivQuants))
+
+# vertical alignment of legend
+plot(log10(gdp), gdpPerCap,
+	pch=21,	cex=2, bg=cols, xlab='GDP (log 2019 USD)',
+ylab='2019 GDP per Capita (USD)',
+)
 
 legendBreaks(
 	x='bottomright',
 	y = NULL,
 	inset = 0.02,
-	width = 0.23,
-	height = 0.7,
-	labels = c(33, 67),
-	labAdjX = 0.6,
-	labAdjY = c(0.33, 0.67),
-	col = c('lightsalmon', 'red', 'darkred'),
-	border = 'black',
-	title = 'HIV (\%)',
-	titleAdj = c(0.5, 0.9),
-	adjX = c(0.2, 0.5),
-	adjY = c(0.2, 0.8),
-	boxBorder = 'black',
-	swatches=list(
-		list(
-			swatchAdjY=c(0.05, 0.15),
-			col='gray',
-			border='black',
-			labels='NA'
-		)
+width = 0.23,
+height = 0.7,
+labels = labels,
+labAdjX = 0.75,
+labAdjY = hivLabelPos,
+col = c('white', 'lightsalmon', 'red', 'darkred'),
+border = 'black',
+title = 'HIV (\%)',
+titleAdj = c(0.5, 0.9),
+adjX = c(0.2, 0.5),
+adjY = c(0.2, 0.8),
+boxBorder = 'black',
+swatches=list(
+	list(
+		swatchAdjY=c(0.05, 0.15),
+		col='gray',
+		border='black',
+		labels='NA'
 	)
+)
+)
+
+# horizontal alignment of legend
+plot(log10(gdp), gdpPerCap,
+pch=21,	cex=2, bg=cols, xlab='GDP (log 2019 USD)',
+ylab='2019 GDP per Capita (USD)',
+)
+
+legendBreaks(
+x = 'topleft',
+y = NULL,
+horiz = TRUE,
+inset = 0.02,
+width = 0.7,
+height = 0.23,
+labels = labels,
+labAdjX = hivLabelPos,
+labAdjY = 0.13,
+col = c('white', 'lightsalmon', 'red', 'darkred'),
+border = 'black',
+title = 'HIV (\%)',
+titleAdj = c(0.5, 0.9),
+adjX = c(0.2, 0.95),
+adjY = c(0.3, 0.8),
+boxBorder = NA,
+boxBg = NA,
+swatches=list(
+	list(
+		swatchAdjX=c(0.03, 0.18),
+		col='gray',
+		border='black',
+		labels='NA'
+	)
+)
 )
 }
 \seealso{
