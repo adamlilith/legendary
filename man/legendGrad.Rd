@@ -4,12 +4,26 @@
 \alias{legendGrad}
 \title{Add a gradient legend to a plot}
 \usage{
-legendGrad(x, y = NULL, inset = 0, vert = TRUE, width = 0.2,
-  height = 0.5, labels = c(0, 0.33, 0.67, 1), labAdj = 0.75,
-  col = c("yellow", "orange", "red"), border = "black",
-  title = "Title", titleAdj = c(0.5, 0.9), adjX = c(0.2, 0.5),
-  adjY = c(0.1, 0.8), boxBg = par("bg"), boxBorder = "black",
-  swatches = NULL, ...)
+legendGrad(
+  x,
+  y = NULL,
+  inset = 0,
+  vert = TRUE,
+  width = 0.2,
+  height = 0.5,
+  labels = c(0, 0.33, 0.67, 1),
+  labAdj = 0.75,
+  col = c("yellow", "orange", "red"),
+  border = "black",
+  title = "Title",
+  titleAdj = c(0.5, 0.9),
+  adjX = c(0.2, 0.5),
+  adjY = c(0.1, 0.8),
+  boxBg = par("bg"),
+  boxBorder = "black",
+  swatches = NULL,
+  ...
+)
 }
 \arguments{
 \item{x}{Numeric or character. Describes the location of the legend. This is a numeric value (in which case \code{y} must also be supplied) indicating the x-coordinate of the top left of the box surrounding the legend. Alternatively, it is a character describing the position of the box surrounding the legend relative to the existing plot (\code{'topleft'}, \code{'topright'}, \code{'bottomleft'}, \code{'bottomright'}, \code{'top'}, \code{'bottom'}, \code{'left'}, \code{'right'}, or \code{'center'}).}

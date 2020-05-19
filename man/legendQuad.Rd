@@ -4,12 +4,26 @@
 \alias{legendQuad}
 \title{Creates a "four-color" plot legend for interpreting data with mixtures of four aspects.}
 \usage{
-legendQuad(x, y = NULL, inset = 0, width = 0.2, height = 0.2,
-  labels = LETTERS[1:4], labelAdj = 1, cols = c("white", "cyan",
-  "black", "red"), n = 25, border = par("fg"), title = "",
-  titleAdj = c(0.5, 0.9), aspect = FALSE, swatchAdjX = c(0.15, 0.85),
-  swatchAdjY = c(0.25, 0.85), boxBg = par("bg"),
-  boxBorder = par("fg"), ...)
+legendQuad(
+  x,
+  y = NULL,
+  inset = 0,
+  width = 0.2,
+  height = 0.2,
+  labels = LETTERS[1:4],
+  labelAdj = 1,
+  cols = c("white", "cyan", "black", "red"),
+  n = 25,
+  border = par("fg"),
+  title = "",
+  titleAdj = c(0.5, 0.9),
+  aspect = FALSE,
+  swatchAdjX = c(0.15, 0.85),
+  swatchAdjY = c(0.25, 0.85),
+  boxBg = par("bg"),
+  boxBorder = par("fg"),
+  ...
+)
 }
 \arguments{
 \item{x}{Numeric or character. Describes the location of the legend. This is a numeric value (in which case \code{y} must also be supplied) indicating the x-coordinate of the top left of the box surrounding the legend. Alternatively, it is a character describing the position of the box surrounding the legend relative to the existing plot (\code{'topleft'}, \code{'topright'}, \code{'bottomleft'}, \code{'bottomright'}, \code{'top'}, \code{'bottom'}, \code{'left'}, or \code{'right'}).}

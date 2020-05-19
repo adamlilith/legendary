@@ -4,8 +4,20 @@
 \alias{annulusSeg}
 \title{Plot an annulus with different segments on an existing plot}
 \usage{
-annulusSeg(x, y, inner, outer, deg = NULL, n = 1000, col = "black",
-  density = NULL, angle = 45, border = col, force0 = FALSE, ...)
+annulusSeg(
+  x,
+  y,
+  inner,
+  outer,
+  deg = NULL,
+  n = 1000,
+  col = "black",
+  density = NULL,
+  angle = 45,
+  border = col,
+  force0 = FALSE,
+  ...
+)
 }
 \arguments{
 \item{x}{Numeric, x-coordinate of center of annulus.}

@@ -4,7 +4,9 @@
 \name{welfare}
 \alias{welfare}
 \title{GDP, population, and HIV prevalence for the countries of the world}
-\format{A data frame with GDP, population, and HIV prevalence for the countries of the world.}
+\format{
+A data frame with GDP, population, and HIV prevalence for the countries of the world.
+}
 \source{
 \href{http://datatopics.worldbank.org/world-development-indicators/}{World Bank Development Index}
 }

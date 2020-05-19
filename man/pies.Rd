@@ -4,8 +4,17 @@
 \alias{pies}
 \title{Plots a pie graph.}
 \usage{
-pies(x, add = FALSE, xPos = 0, yPos = 0, radius = 0.8,
-  col = base::seq_along(x), border = "black", aspect = TRUE, ...)
+pies(
+  x,
+  add = FALSE,
+  xPos = 0,
+  yPos = 0,
+  radius = 0.8,
+  col = base::seq_along(x),
+  border = "black",
+  aspect = TRUE,
+  ...
+)
 }
 \arguments{
 \item{x}{a Numeric vector of non-negative numerical quantities. These values are displayed as the areas of pie slices.}

@@ -4,8 +4,20 @@
 \alias{annulus}
 \title{Plot an annulus on an existing plot.}
 \usage{
-annulus(x, y, inner, outer, deg = c(0, 360), n = 1000, col = "black",
-  density = NULL, angle = 45, border = col, force0 = FALSE, ...)
+annulus(
+  x,
+  y,
+  inner,
+  outer,
+  deg = c(0, 360),
+  n = 1000,
+  col = "black",
+  density = NULL,
+  angle = 45,
+  border = col,
+  force0 = FALSE,
+  ...
+)
 }
 \arguments{
 \item{x}{Numeric, x-coordinate of center of annulus.}
