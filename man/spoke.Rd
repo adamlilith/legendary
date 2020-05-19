@@ -4,11 +4,27 @@
 \alias{spoke}
 \title{Spoke plot}
 \usage{
-spoke(pos, neg = NULL, ontop = "pos", labels = NULL, shrink = 1,
-  labelOffset = 1.02, nudge = 1, pch = 16, cexPoints = 1,
-  cexLabel = 1, lwdPos = 1, lwdNeg = 1, ltyPos = "solid",
-  ltyNeg = "dashed", colPos = "black", colNeg = "black",
-  colPoints = "black", colLabel = "black", ...)
+spoke(
+  pos,
+  neg = NULL,
+  ontop = "pos",
+  labels = NULL,
+  shrink = 1,
+  labelOffset = 1.02,
+  nudge = 1,
+  pch = 16,
+  cexPoints = 1,
+  cexLabel = 1,
+  lwdPos = 1,
+  lwdNeg = 1,
+  ltyPos = "solid",
+  ltyNeg = "dashed",
+  colPos = "black",
+  colNeg = "black",
+  colPoints = "black",
+  colLabel = "black",
+  ...
+)
 }
 \arguments{
 \item{pos}{Binary matrix. Elements must be 1s indicating row (label) is associated with column (label) or 0s indicatig no such associations.}

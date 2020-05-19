@@ -1,7 +1,7 @@
 Package: legendary
 Title: New types of plots and their legends 
-Version: 0.0.1.4
-Date: 2019-10-03
+Version: 0.0.1.5
+Date: 2020-05-19
 Author: Adam B. Smith <adam.smith@mobot.org>
 Maintainer: Adam B. Smith <adam.smith@mobot.org>
 Description: This package is a collage of functions to create plots
@@ -16,5 +16,6 @@ Suggests:
 	IDPmisc
 License: GPL (>=3) + file LICENSE
 LazyData: true
+Encoding: UTF-8
 URL: http://www.earthSkySea.org
-RoxygenNote: 6.1.1
+RoxygenNote: 7.1.0

@@ -4,11 +4,27 @@
 \alias{pancakes}
 \title{Plots two horizontal barplots back-to-back.}
 \usage{
-pancakes(x1, x2, sameScale = TRUE, xlim1 = NULL, xlim2 = NULL,
-  tickLabelOffset = -0.05, xlab1 = "x1", xlab2 = "x2", xlab = NULL,
-  xlabOffset = -0.12, tickSize = 0.01, labels = NULL,
-  labelSide = "both", cexLab = 1, col1 = "gray70", col2 = "gray30",
-  border1 = "black", border2 = "black", ...)
+pancakes(
+  x1,
+  x2,
+  sameScale = TRUE,
+  xlim1 = NULL,
+  xlim2 = NULL,
+  tickLabelOffset = -0.05,
+  xlab1 = "x1",
+  xlab2 = "x2",
+  xlab = NULL,
+  xlabOffset = -0.12,
+  tickSize = 0.01,
+  labels = NULL,
+  labelSide = "both",
+  cexLab = 1,
+  col1 = "gray70",
+  col2 = "gray30",
+  border1 = "black",
+  border2 = "black",
+  ...
+)
 }
 \arguments{
 \item{x1}{Numeric, vector of values for the left-hand side of the plot. Values are plotted such that the first is represented by the lowest bar, the second the next-higher bar, and so on.}
