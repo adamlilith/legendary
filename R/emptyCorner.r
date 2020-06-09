@@ -11,7 +11,7 @@
 #' @param onlyIn Logical, if \code{TRUE} (default), only consider plot items that are in the plot region.
 #' @param least Logical, if \code{TRUE} (default), then indicate the least-occupied corner. If \code{FALSE} then indicate the most-occupied corner.
 #' @details Note that you must already have a plot made for this to work.
-#' @return Integer: \code{1}: top left; \code{2}: top right; \code{3}: bottom left; \code{4}: bottom right.
+#' @return Character indicating the corner that is the least occupied.
 #' @examples
 #' # generate some numbers
 #' set.seed(123)
@@ -84,10 +84,20 @@ emptyCorner <- function(
 		}
 	
 		dens <- c(ulDens, urDens, llDens, lrDens)
-		out <- if (least) {
+		where <- if (least) {
 			which.min(dens)
 		} else {
 			which.max(dens)
+		}
+		
+		out <- if (where == 1) {
+			'topleft'
+		} else if (where == 2) {
+			'topright'
+		} else if (where == 3) {
+			'bottomleft'
+		} else if (where == 4) {
+			'bottomright'
 		}
 
 	} else {

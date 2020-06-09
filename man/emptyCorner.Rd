@@ -21,7 +21,7 @@ emptyCorner(x, by = "distance", onlyIn = TRUE, least = TRUE)
 \item{least}{Logical, if \code{TRUE} (default), then indicate the least-occupied corner. If \code{FALSE} then indicate the most-occupied corner.}
 }
 \value{
-Integer: \code{1}: top left; \code{2}: top right; \code{3}: bottom left; \code{4}: bottom right.
+Character indicating the corner that is the least occupied.
 }
 \description{
 This function identifies the corner of a plot region that is the least occupied by plot elements.
