@@ -26,5 +26,6 @@ NB: If for some reason these commands don't work, you can install the package(s)
 
 ## Auxiliary ###
 * `colorFrom4Vector`: Transforms a vector of four values to HSV color plus coordinates on a `quadPlot`
-* `getFig`: Return coordinates for `par(fig=xxxx)` for use with `layout` function for placing subplots.
+* `emptyCorner`: Find the corner of the plot that is the least occupied by plot elements
+* `getFig`: Return coordinates for `par(fig=xxxx)` for use with `layout` function for placing subplots
 * `labelFig`: Adds a figure title in the upper left corner of the plot region (as in manuscripts).
