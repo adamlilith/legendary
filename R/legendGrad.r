@@ -99,7 +99,7 @@ legendGrad <- function(
 	...
 ) {
 
-	dots <- list(...)
+	dots <- as.list(...)
 	if (!('pos' %in% omnibus::ellipseNames(dots))) pos <- 4
 
 	# get coordinate stats for existing plot
