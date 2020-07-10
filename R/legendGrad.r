@@ -50,7 +50,7 @@
 #' plot(wealth$gdp, wealth$perCapGdp, pch=21,
 #' cex=popRescaled, bg=cols, xlab='GDP (Billion $)', ylab='GDP Per Capita ($)')
 #' text(wealth$gdp, wealth$perCapGdp, labels=as.character(wealth$country),
-#' position=4, xpd=NA)
+#' pos=4, xpd=NA)
 #'
 #' legendGrad(
 #' 	x='bottomright',
@@ -99,8 +99,8 @@ legendGrad <- function(
 	...
 ) {
 
-	dots <- as.list(...)
-	if (!('pos' %in% omnibus::ellipseNames(dots))) pos <- 4
+	dots <- list(...)
+	if (!('pos' %in% names(dots))) pos <- 4
 
 	# get coordinate stats for existing plot
 	position <- par('usr')
