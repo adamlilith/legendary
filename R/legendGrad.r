@@ -50,7 +50,7 @@
 #' plot(wealth$gdp, wealth$perCapGdp, pch=21,
 #' cex=popRescaled, bg=cols, xlab='GDP (Billion $)', ylab='GDP Per Capita ($)')
 #' text(wealth$gdp, wealth$perCapGdp, labels=as.character(wealth$country),
-#' pos=4, xpd=NA)
+#' position=4, xpd=NA)
 #'
 #' legendGrad(
 #' 	x='bottomright',
@@ -99,11 +99,14 @@ legendGrad <- function(
 	...
 ) {
 
-	# get coordinate stats for existing plot
-	pos <- par('usr')
+	dots <- as.list(...)
+	if (!('pos' %in% omnibus::ellipseNames(dots))) pos <- 4
 
-	plotWidth <- pos[2] - pos[1]
-	plotHeight <- pos[4] - pos[3]
+	# get coordinate stats for existing plot
+	position <- par('usr')
+
+	plotWidth <- position[2] - position[1]
+	plotHeight <- position[4] - position[3]
 
 	legWidth <- width * plotWidth
 	legHeight <- height * plotHeight
@@ -117,32 +120,32 @@ legendGrad <- function(
 		yInset <- inset[2] * plotHeight
 
 		if (x == 'topleft') {
-			x <- pos[1] + xInset
-			y <- pos[4] - yInset
+			x <- position[1] + xInset
+			y <- position[4] - yInset
 		} else if (x == 'topright') {
-			x <- pos[2] - legWidth - xInset
-			y <- pos[4] - yInset
+			x <- position[2] - legWidth - xInset
+			y <- position[4] - yInset
 		} else if (x == 'bottomleft') {
-			x <- pos[1] + xInset
-			y <- pos[3] + legHeight + yInset
+			x <- position[1] + xInset
+			y <- position[3] + legHeight + yInset
 		} else if (x == 'bottomright') {
-			x <- pos[2] - legWidth - xInset
-			y <- pos[3] + legHeight + yInset
+			x <- position[2] - legWidth - xInset
+			y <- position[3] + legHeight + yInset
 		} else if (x == 'bottom') {
-			x <- pos[1] + 0.5 * plotWidth - 0.5 * legWidth
-			y <- pos[3] + legHeight + yInset
+			x <- position[1] + 0.5 * plotWidth - 0.5 * legWidth
+			y <- position[3] + legHeight + yInset
 		} else if (x == 'top') {
-			x <- pos[1] + 0.5 * plotWidth - 0.5 * legWidth
-			y <- pos[4] - yInset
+			x <- position[1] + 0.5 * plotWidth - 0.5 * legWidth
+			y <- position[4] - yInset
 		} else if (x == 'left') {
-			x <- pos[1] + xInset
-			y <- pos[3] + 0.5 * plotHeight + 0.5 * legHeight
+			x <- position[1] + xInset
+			y <- position[3] + 0.5 * plotHeight + 0.5 * legHeight
 		} else if (x == 'right') {
-			x <- pos[2] - xInset - legWidth
-			y <- pos[3] + 0.5 * plotHeight + 0.5 * legHeight
+			x <- position[2] - xInset - legWidth
+			y <- position[3] + 0.5 * plotHeight + 0.5 * legHeight
 		} else if (x == 'center') {
-			x <- pos[1] + 0.5 * (pos[2] - pos[1]) - 0.5 * legWidth
-			y <- pos[3] + 0.5 * plotHeight + 0.5 * legHeight
+			x <- position[1] + 0.5 * (position[2] - position[1]) - 0.5 * legWidth
+			y <- position[3] + 0.5 * plotHeight + 0.5 * legHeight
 		} else {
 			error('The "x" coordinate in function "legendGrad" must be a numeric value or\nan accepted position word (e.g., "top", "topleft", "bottomright", etc.).')
 		}
@@ -188,7 +191,7 @@ legendGrad <- function(
 
 		if (vert) {
 			labY <- seq(bottom, top, length.out=length(labels))
-			text(x + legWidth * rep(labAdj, length(labels)), labY, labels=labels, pos=4, xpd=NA, ...)
+			text(x + legWidth * rep(labAdj, length(labels)), labY, labels=labels, xpd=NA, ...)
 		} else {
 			labX <- seq(left, right, length.out=length(labels))
 			text(labX, y + legHeight * rep(labAdj, length(labels)), labels=labels, xpd=NA, ...)
@@ -206,7 +209,7 @@ legendGrad <- function(
 
 			graphics::polygon(x=c(left, right, right, left), y=c(bottom, bottom, top, top), col=swatches[[i]]$col, border=swatches[[i]]$border, xpd=NA, ...)
 			labY <- top <- y - (1 - (mean(c(swatches[[i]]$swatchAdjY[[1]], swatches[[i]]$swatchAdjY[[2]])))) * legHeight
-			text(x + legWidth * labAdj, labY, labels=swatches[[i]]$labels, pos=4, xpd=NA, ...)
+			text(x + legWidth * labAdj, labY, labels=swatches[[i]]$labels, xpd=NA, ...)
 
 		}
 
