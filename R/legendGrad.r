@@ -9,10 +9,14 @@
 #' @param height Numeric. Scaling factor for box height.
 #' @param labels Vector of characters of numeric values. Labels (from least to most) of levels of the focal variable indicated by the color ramp.
 #' @param labAdj Numeric between 0 and 1. If \code{vert} is \code{TRUE} then this is the horizontal position of labels relative to the containing box. If \code{vert} is \code{FALSE} then this is the vertical position relative to the containing box.
+#' @param labPos 1 (right-align labels), 2 (bottom-align labels), 3 (left-align labels), or 4 (top-align labels).
+#' @param labCex Positive numeric, size of label text.
 #' @param col List of characters or integers. Names of colors to be used to create a gradient to fill the legend bar. The first color will be the lowest value and the last the highest value.
 #' @param border Character or integer. Name (or integer code) of color to use to draw border of the gradient bar.
 #' @param title Character or \code{NULL}. Name of title for the legend.
 #' @param titleAdj Two numeric values between 0 and 1. Position of the legend title relative to the container box. The first pertains to horizontal positioning and the second vertical positioning.
+#' @param titlePos 1 (right-align title), 2 (bottom-align title), 3 (left-align title), or 4 (top-align title).
+#' @param titleCex Positive numeric, size of title text.
 #' @param adjX Two numeric values between 0 and 1. Size of the gradient bar in the x-dimension as a proportion of the container box size. The first pertains to the left side of the bar and the second the right side.
 #' @param adjY Two numeric values between 0 and 1. Size of the gradient bar in the y-dimension as a proportion of the container box size. The first pertains to the bottom of the bar and the second the top.
 #' @param boxBg Character or integer. Name (or integer code) of color to use to use for box containing legend. Leave as \code{NULL} to not draw a box.
@@ -21,10 +25,10 @@
 #' \itemize{
 #' 	\item \code{swatchAdjY} Two numeric values between 0 and 1. Size of the swatches the x-dimension as a proportion of the container box size. The first pertains to the left side of the bar and the second the right side.  (Swatches will always be left-right aligned with the gradient bar.)
 #' 	\item \code{col} Character or integer representing the swatch's color.
-#' 	\item \code{border} Character or integer. Name (or integer code) of color to use to draw border of the swatch.
 #' 	\item \code{labels} Character, for labelling the swatch.
+#' 	\item \code{...} Other values to pass to \code{\link[graphics]{polygon}} and \code{\link[graphics]{text}} for formatting the swatch and its label (e.g., \code{border}, \code{lwd}, \code{lty}, \code{pos}, \code{cex}, etc.). These values will override any specified in \code{...}.
 #' }
-#' @param ... Arguments to pass to \code{\link[graphics]{plot}}, \code{\link[graphics]{polygon}}, or \code{\link[graphics]{text}}.
+#' @param ... Arguments to pass to \code{\link{plot}}, \code{\link[graphics]{polygon}}, or \code{\link[graphics]{text}}.
 #' @return Nothing (side effect is to add a legend to an existing graphics device).
 #' @seealso \code{\link[graphics]{legend}}, \code{\link[legendary]{legendQuad}}
 #' @examples
@@ -59,7 +63,7 @@
 #' 	width = 0.23,
 #' 	height = 0.3,
 #' 	labels = 100 * pretty(wealth$hivPerc),
-#' 	labAdjX = 0.6,
+#' 	labAdjX = 0.4,
 #' 	col = c('white', 'red'),
 #' 	border = 'black',
 #' 	title = 'HIV (%)',
@@ -71,8 +75,11 @@
 #' 		list(
 #' 			swatchAdjY=c(0.05, 0.15),
 #' 			col='gray',
+#' 			labels='NA',
+#'			cex=1.2,
 #' 			border='black',
-#' 			labels='NA'
+#'			lwd=2,
+#'			lty='dotted'
 #' 		)
 #' 	)
 #' )
@@ -87,11 +94,15 @@ legendGrad <- function(
 	height = 0.5,
 	labels = c(0, 0.33, 0.67, 1),
 	labAdj = 0.75,
+	labPos = 4,
+	labCex = 1,
 	col = c('yellow', 'orange', 'red'),
 	border = 'black',
 	title = 'Title',
 	titleAdj = c(0.5, 0.9),
-	adjX = c(0.2, 0.5),
+	titlePos = NULL,
+	titleCex = 1,
+	adjX = c(0.2, 0.65),
 	adjY = c(0.1, 0.8),
 	boxBg = par('bg'),
 	boxBorder = 'black',
@@ -100,63 +111,20 @@ legendGrad <- function(
 ) {
 
 	dots <- list(...)
-	if (!('pos' %in% names(dots))) pos <- 4
 
-	# get coordinate stats for existing plot
-	position <- par('usr')
-
-	plotWidth <- position[2] - position[1]
-	plotHeight <- position[4] - position[3]
-
-	legWidth <- width * plotWidth
-	legHeight <- height * plotHeight
-
-	# get containing box location top left coordinate
-	if (class(x) == 'character') {
-
-		if (length(inset) == 1) inset <- c(inset, inset)
-
-		xInset <- inset[1] * plotWidth
-		yInset <- inset[2] * plotHeight
-
-		if (x == 'topleft') {
-			x <- position[1] + xInset
-			y <- position[4] - yInset
-		} else if (x == 'topright') {
-			x <- position[2] - legWidth - xInset
-			y <- position[4] - yInset
-		} else if (x == 'bottomleft') {
-			x <- position[1] + xInset
-			y <- position[3] + legHeight + yInset
-		} else if (x == 'bottomright') {
-			x <- position[2] - legWidth - xInset
-			y <- position[3] + legHeight + yInset
-		} else if (x == 'bottom') {
-			x <- position[1] + 0.5 * plotWidth - 0.5 * legWidth
-			y <- position[3] + legHeight + yInset
-		} else if (x == 'top') {
-			x <- position[1] + 0.5 * plotWidth - 0.5 * legWidth
-			y <- position[4] - yInset
-		} else if (x == 'left') {
-			x <- position[1] + xInset
-			y <- position[3] + 0.5 * plotHeight + 0.5 * legHeight
-		} else if (x == 'right') {
-			x <- position[2] - xInset - legWidth
-			y <- position[3] + 0.5 * plotHeight + 0.5 * legHeight
-		} else if (x == 'center') {
-			x <- position[1] + 0.5 * (position[2] - position[1]) - 0.5 * legWidth
-			y <- position[3] + 0.5 * plotHeight + 0.5 * legHeight
-		} else {
-			error('The "x" coordinate in function "legendGrad" must be a numeric value or\nan accepted position word (e.g., "top", "topleft", "bottomright", etc.).')
-		}
-
-	}
+	location <- .locateElement(x=x, y=y, inset=inset, width=width, height=height)
+	x <- location$xy[1]
+	y <- location$xy[2]
+	plotHeight <- location$plotHeight
+	plotWidth <- location$plotWidth
+	legHeight <- location$legHeight
+	legWidth <- location$legWidth
 
 	# draw containing box
 	if (!is.null(boxBorder)) graphics::polygon(c(x, x + width * plotWidth, x + width * plotWidth, x), c(y, y, y - height * plotHeight, y - height * plotHeight), col=boxBg, border=boxBorder, xpd=NA, ...)
 
 	# legend title
-	graphics::text(x + titleAdj[1] * legWidth, y - (1 - titleAdj[2]) * legHeight, labels=title, xpd=NA, ...)
+	graphics::text(x + titleAdj[1] * legWidth, y - (1 - titleAdj[2]) * legHeight, labels=title, pos=titlePos, cex=titleCex, xpd=NA, ...)
 
 	# color gradient
 	colFx <- grDevices::colorRampPalette(col)
@@ -191,10 +159,10 @@ legendGrad <- function(
 
 		if (vert) {
 			labY <- seq(bottom, top, length.out=length(labels))
-			text(x + legWidth * rep(labAdj, length(labels)), labY, labels=labels, xpd=NA, ...)
+			text(x + legWidth * rep(labAdj, length(labels)), labY, labels=labels, pos=labPos, cex=labCex, xpd=NA, ...)
 		} else {
 			labX <- seq(left, right, length.out=length(labels))
-			text(labX, y + legHeight * rep(labAdj, length(labels)), labels=labels, xpd=NA, ...)
+			text(labX, y + legHeight * rep(labAdj, length(labels)), labels=labels, pos=labPos, cex=labCex, xpd=NA, ...)
 		}
 		
 	}
@@ -207,9 +175,50 @@ legendGrad <- function(
 			top <- y - (1 - swatches[[i]]$swatchAdjY[1]) * legHeight
 			bottom <- y - (1 - swatches[[i]]$swatchAdjY[2]) * legHeight
 
-			graphics::polygon(x=c(left, right, right, left), y=c(bottom, bottom, top, top), col=swatches[[i]]$col, border=swatches[[i]]$border, xpd=NA, ...)
+			swatchPos <- if (any(names(swatches[[i]]) == 'pos')) {
+				swatches[[i]]$pos
+			} else if (any(names(dots) == 'pos')) {
+				dots$pos
+			} else {
+				NULL
+			}
+
+			swatchCex <- if (any(names(swatches[[i]]) == 'cex')) {
+				swatches[[i]]$cex
+			} else if (any(names(dots) == 'cex')) {
+				dots$cex
+			} else {
+				par('cex')
+			}
+
+			swatchLwd <- if (any(names(swatches[[i]]) == 'lwd')) {
+				swatches[[i]]$lwd
+			} else if (any(names(dots) == 'lwd')) {
+				dots$lwd
+			} else {
+				par('lwd')
+			}
+
+			swatchLty <- if (any(names(swatches[[i]]) == 'lty')) {
+				swatches[[i]]$lty
+			} else if (any(names(dots) == 'lty')) {
+				dots$lty
+			} else {
+				par('lty')
+			}
+
+			swatchBorder <- if (any(names(swatches[[i]]) == 'border')) {
+				swatches[[i]]$border
+			} else if (any(names(dots) == 'border')) {
+				dots$border
+			} else {
+				par('fg')
+			}
+
+			graphics::polygon(x=c(left, right, right, left), y=c(bottom, bottom, top, top), col=swatches[[i]]$col, xpd=NA, lwd=swatchLwd, lty=swatchLty, border=swatchBorder, ...)
+			
 			labY <- top <- y - (1 - (mean(c(swatches[[i]]$swatchAdjY[[1]], swatches[[i]]$swatchAdjY[[2]])))) * legHeight
-			text(x + legWidth * labAdj, labY, labels=swatches[[i]]$labels, xpd=NA, ...)
+			text(x + legWidth * labAdj, labY, labels=swatches[[i]]$labels, pos=swatchPos, cex=swatchCex, xpd=NA, ...)
 
 		}
 

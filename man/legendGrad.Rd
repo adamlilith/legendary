@@ -13,11 +13,15 @@ legendGrad(
   height = 0.5,
   labels = c(0, 0.33, 0.67, 1),
   labAdj = 0.75,
+  labPos = 4,
+  labCex = 1,
   col = c("yellow", "orange", "red"),
   border = "black",
   title = "Title",
   titleAdj = c(0.5, 0.9),
-  adjX = c(0.2, 0.5),
+  titlePos = NULL,
+  titleCex = 1,
+  adjX = c(0.2, 0.65),
   adjY = c(0.1, 0.8),
   boxBg = par("bg"),
   boxBorder = "black",
@@ -42,6 +46,10 @@ legendGrad(
 
 \item{labAdj}{Numeric between 0 and 1. If \code{vert} is \code{TRUE} then this is the horizontal position of labels relative to the containing box. If \code{vert} is \code{FALSE} then this is the vertical position relative to the containing box.}
 
+\item{labPos}{1 (right-align labels), 2 (bottom-align labels), 3 (left-align labels), or 4 (top-align labels).}
+
+\item{labCex}{Positive numeric, size of label text.}
+
 \item{col}{List of characters or integers. Names of colors to be used to create a gradient to fill the legend bar. The first color will be the lowest value and the last the highest value.}
 
 \item{border}{Character or integer. Name (or integer code) of color to use to draw border of the gradient bar.}
@@ -49,6 +57,10 @@ legendGrad(
 \item{title}{Character or \code{NULL}. Name of title for the legend.}
 
 \item{titleAdj}{Two numeric values between 0 and 1. Position of the legend title relative to the container box. The first pertains to horizontal positioning and the second vertical positioning.}
+
+\item{titlePos}{1 (right-align title), 2 (bottom-align title), 3 (left-align title), or 4 (top-align title).}
+
+\item{titleCex}{Positive numeric, size of title text.}
 
 \item{adjX}{Two numeric values between 0 and 1. Size of the gradient bar in the x-dimension as a proportion of the container box size. The first pertains to the left side of the bar and the second the right side.}
 
@@ -62,11 +74,11 @@ legendGrad(
 \itemize{
     \item \code{swatchAdjY} Two numeric values between 0 and 1. Size of the swatches the x-dimension as a proportion of the container box size. The first pertains to the left side of the bar and the second the right side.  (Swatches will always be left-right aligned with the gradient bar.)
     \item \code{col} Character or integer representing the swatch's color.
-    \item \code{border} Character or integer. Name (or integer code) of color to use to draw border of the swatch.
     \item \code{labels} Character, for labelling the swatch.
+    \item \code{...} Other values to pass to \code{\link[graphics]{polygon}} and \code{\link[graphics]{text}} for formatting the swatch and its label (e.g., \code{border}, \code{lwd}, \code{lty}, \code{pos}, \code{cex}, etc.). These values will override any specified in \code{...}.
 }}
 
-\item{...}{Arguments to pass to \code{\link[graphics]{plot}}, \code{\link[graphics]{polygon}}, or \code{\link[graphics]{text}}.}
+\item{...}{Arguments to pass to \code{\link{plot}}, \code{\link[graphics]{polygon}}, or \code{\link[graphics]{text}}.}
 }
 \value{
 Nothing (side effect is to add a legend to an existing graphics device).
@@ -106,7 +118,7 @@ legendGrad(
 	width = 0.23,
 	height = 0.3,
 	labels = 100 * pretty(wealth$hivPerc),
-	labAdjX = 0.6,
+	labAdjX = 0.4,
 	col = c('white', 'red'),
 	border = 'black',
 	title = 'HIV (\%)',
@@ -118,8 +130,11 @@ legendGrad(
 		list(
 			swatchAdjY=c(0.05, 0.15),
 			col='gray',
+			labels='NA',
+		cex=1.2,
 			border='black',
-			labels='NA'
+		lwd=2,
+		lty='dotted'
 		)
 	)
 )

@@ -42,7 +42,7 @@ quadPlot(
 
 \item{na.rm}{Logical, if \code{TRUE} then remove lines in \code{x} that have at least one \code{NA}.}
 
-\item{...}{Arguments to pass to \code{\link[graphics]{points}}, \code{\link[graphics]{plot}}, \code{\link[graphics]{polygon}}, or \code{\link[graphics]{text}}.}
+\item{...}{Arguments to pass to \code{\link[graphics]{points}}, \code{\link{plot}}, \code{\link[graphics]{polygon}}, or \code{\link[graphics]{text}}.}
 }
 \value{
 Nothing (side effect is to create a plot).

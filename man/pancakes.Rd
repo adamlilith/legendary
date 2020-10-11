@@ -55,7 +55,7 @@ pancakes(
 
 \item{border1, border2}{Border colors of bars.}
 
-\item{...}{Arguments to pass to \code{\link[graphics]{par}} or \code{\link[graphics]{plot}}.}
+\item{...}{Arguments to pass to \code{\link[graphics]{par}} or \code{\link{plot}}.}
 
 \item{labelOffset}{Numeric, offset (from border or plot region) for positioning of labels. Positive numbers move labels outward, negative inward.}
 }
