@@ -73,7 +73,7 @@ legendBreaks(
     \item \code{labels} Character, for labeling the swatch.
 }}
 
-\item{...}{Arguments to pass to \code{\link[graphics]{plot}}, \code{\link[graphics]{polygon}}, or \code{\link[graphics]{text}}.}
+\item{...}{Arguments to pass to \code{\link{plot}}, \code{\link[graphics]{polygon}}, or \code{\link[graphics]{text}}.}
 }
 \value{
 Nothing (side effect is to add a legend to an existing graphics device).

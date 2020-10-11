@@ -27,7 +27,7 @@
 #' 	\item \code{border} Character or integer. Name (or integer code) of color to use to draw border of the swatch.
 #' 	\item \code{labels} Character, for labeling the swatch.
 #' }
-#' @param ... Arguments to pass to \code{\link[graphics]{plot}}, \code{\link[graphics]{polygon}}, or \code{\link[graphics]{text}}.
+#' @param ... Arguments to pass to \code{\link{plot}}, \code{\link[graphics]{polygon}}, or \code{\link[graphics]{text}}.
 #' @return Nothing (side effect is to add a legend to an existing graphics device).
 #' @seealso \code{\link[graphics]{legend}}, \code{\link[legendary]{legendQuad}}
 #' @examples
