@@ -4,7 +4,7 @@ This package contains functions for new kinds of plots and legends.
 
 You can install this package in R using these commands:
 
-`remotes::install_github('adamlilith/legendary')`  
+`remotes::install_github('adamlilith/legendary', dependencies=TRUE)`  
 
 NB: If for some reason these commands don't work, you can install the package(s) by downloading the latest zip/tar file from the `zipTarFiles` directory and installing the package(s) manually.
 
