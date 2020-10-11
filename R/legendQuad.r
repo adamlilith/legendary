@@ -18,7 +18,7 @@
 #' @param aspect Logical, if \code{TRUE} then the height of the color swatch is scaled by \code{swatchAdjX} so that the swatch is square (and \code{swatchAdjY} is ignored).  If \code{FALSE} then the height is determined by \code{swatchAdjY}.
 #' @param boxBg Character or integer. Name (or integer code) of color to use to use for box containing legend. Leave as \code{NULL} to not draw a box.
 #' @param boxBorder Character or integer. Name (or integer code) of color to use to use for box border containing legend. Leave as \code{NULL} to not draw a box border.
-#' @param ... Arguments to pass to \code{\link[graphics]{plot}}, \code{\link[graphics]{polygon}}, or \code{\link[graphics]{text}}.
+#' @param ... Arguments to pass to \code{\link{plot}}, \code{\link[graphics]{polygon}}, or \code{\link[graphics]{text}}.
 #' @return Nothing (side effect is to add a legend to an existing graphics device).
 #' @seealso \code{\link[graphics]{legend}}, \code{\link[legendary]{legendGrad}},
 #' @examples
@@ -52,52 +52,13 @@ legendQuad <- function(
 	...
 ) {
 
-	# get coordinate stats for existing plot
-	pos <- par('usr')
-
-	plotWidth <- pos[2] - pos[1]
-	plotHeight <- pos[4] - pos[3]
-
-	legWidth <- width * plotWidth
-	legHeight <- height * plotHeight
-
-	# get containing box location top left coordinate
-	if (class(x) == 'character') {
-
-		if (length(inset) == 1) inset <- c(inset, inset)
-
-		xInset <- inset[1] * plotWidth
-		yInset <- inset[2] * plotHeight
-		
-		if (x == 'topleft') {
-			x <- pos[1] + xInset
-			y <- pos[4] - yInset
-		} else if (x == 'topright') {
-			x <- pos[2] - legWidth - xInset
-			y <- pos[4] - yInset
-		} else if (x == 'bottomleft') {
-			x <- pos[1] + xInset
-			y <- pos[3] + legHeight + yInset
-		} else if (x == 'bottomright') {
-			x <- pos[2] - legWidth - xInset
-			y <- pos[3] + legHeight + yInset
-		} else if (x == 'bottom') {
-			x <- pos[1] + 0.5 * plotWidth - 0.5 * legWidth
-			y <- pos[3] + legHeight + yInset
-		} else if (x == 'top') {
-			x <- pos[1] + 0.5 * plotWidth - 0.5 * legWidth
-			y <- pos[4] - yInset
-		} else if (x == 'left') {
-			x <- pos[1] + xInset
-			y <- pos[3] + 0.5 * plotHeight + 0.5 * legHeight
-		} else if (x == 'right') {
-			x <- pos[2] - xInset - legWidth
-			y <- pos[3] + 0.5 * plotHeight + 0.5 * legHeight
-		} else {
-			error('The "x" coordinate must be a numeric value or an accepted position word (e.g., "top", "topleft", "bottomright", etc.).')
-		}
-
-	}
+	location <- .locateElement(x=x, y=y, inset=inset, width=width, height=height)
+	x <- location$xy[1]
+	y <- location$xy[2]
+	plotHeight <- location$plotHeight
+	plotWidth <- location$plotWidth
+	legHeight <- location$legHeight
+	legWidth <- location$legWidth
 
 	# legend box
 	graphics::polygon(c(x, x + width * plotWidth, x + width * plotWidth, x), c(y, y, y - height * plotHeight, y - height * plotHeight), col=boxBg, border=boxBorder, ...)

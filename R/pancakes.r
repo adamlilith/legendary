@@ -16,7 +16,7 @@
 #' @param cexLab Either \code{NA} (default) or a numeric > 0. Size of label text.
 #' @param col1,col2 Colors of bars.
 #' @param border1,border2 Border colors of bars.
-#' @param ... Arguments to pass to \code{\link[graphics]{par}} or \code{\link[graphics]{plot}}.
+#' @param ... Arguments to pass to \code{\link[graphics]{par}} or \code{\link{plot}}.
 #' @details If you want to add elements (e.g., arrows) to the plot, then note that the x-axis is scaled fromm -1 to 1 with the two sets of bar plots abutting one another at x = 0. The y-axis is scaled from 0 to 1.
 #' @return None. Side-effect is to generate a plot.
 #' @seealso \code{\link{barplot}}

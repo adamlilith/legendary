@@ -60,7 +60,7 @@ legendQuad(
 
 \item{boxBorder}{Character or integer. Name (or integer code) of color to use to use for box border containing legend. Leave as \code{NULL} to not draw a box border.}
 
-\item{...}{Arguments to pass to \code{\link[graphics]{plot}}, \code{\link[graphics]{polygon}}, or \code{\link[graphics]{text}}.}
+\item{...}{Arguments to pass to \code{\link{plot}}, \code{\link[graphics]{polygon}}, or \code{\link[graphics]{text}}.}
 }
 \value{
 Nothing (side effect is to add a legend to an existing graphics device).
