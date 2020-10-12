@@ -180,7 +180,7 @@ legendGrad <- function(
 			} else if (any(names(dots) == 'pos')) {
 				dots$pos
 			} else {
-				NULL
+				labPos
 			}
 
 			swatchCex <- if (any(names(swatches[[i]]) == 'cex')) {
