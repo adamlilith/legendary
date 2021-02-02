@@ -1,3 +1,6 @@
+legendary 0.0.1.10 (2021-02-02)
+* Internal reorganization of positioning section into its own function.
+
 legendary 0.0.1.9 (2020-10-11)
 * Added more formatting arguments to legendGrad().
 
