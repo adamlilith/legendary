@@ -1,5 +1,5 @@
 # legendary
-<img align="right" src="arthur_byPyle1903.jpg" height="190"/>
+<img align="right" src="legendary.png" height="190"/>
 This package contains functions for new kinds of plots and legends.
 
 You can install this package in R using these commands:
