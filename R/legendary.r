@@ -23,7 +23,10 @@
 #' 		\code{\link{emptyCorner}}: Find the corner of the plot that is the least occupied by plot elements \cr
 #' 		\code{\link{getFig}}: Return coordinates for \code{par(fig=xxxx)} for use with \code{layout} function for placing subplots \cr
 #' 		\code{\link{labelFig}}: Adds a figure title in the upper left corner of the plot region (as in manuscripts) \cr
+#'
 #' @docType package
 #' @author Adam B. Smith
 #' @name legendary
+#' @keywords internal 
+"_PACKAGE"
 NULL
